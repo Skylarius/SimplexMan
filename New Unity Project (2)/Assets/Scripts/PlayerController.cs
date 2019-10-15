@@ -111,8 +111,15 @@ public class PlayerController : MonoBehaviour {
     }
 
     IEnumerator SymplexMan(Recordings recordings) {
-
         recordings.isInteracting = recordings.CleanList(recordings.isInteracting);
+        
+        transform.position = recordings.position[0];
+        transform.rotation = recordings.rotation[0];
+        transform.localScale = recordings.scale[0];
+        rb.velocity = recordings.velocity[0];
+        if (recordings.isInteracting[0]) {
+            PlayerInteraction();
+        }
 
         GameObject clone = Instantiate(clonePrefab, 
                                        recordings.position[0], 

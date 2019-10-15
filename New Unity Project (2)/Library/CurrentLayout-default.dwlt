@@ -115,7 +115,7 @@ MonoBehaviour:
   m_MinSize: {x: 711, y: 494}
   m_MaxSize: {x: 18006, y: 14044}
   vertical: 0
-  controlID: 2140
+  controlID: 513
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 322}
   m_MaxSize: {x: 4002, y: 8022}
   vertical: 1
-  controlID: 2141
+  controlID: 398
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 494}
   m_MaxSize: {x: 10004, y: 14044}
   vertical: 1
-  controlID: 2206
+  controlID: 456
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -417,9 +417,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 49.294773, y: -22.417236, z: -11.361137}
+    m_Target: {x: 29.34826, y: -11.839402, z: 23.134354}
     speed: 2
-    m_Value: {x: 49.294773, y: -22.417236, z: -11.361137}
+    m_Value: {x: 29.34826, y: -11.839402, z: 23.134354}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -448,13 +448,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.56715363, y: -0.14628883, z: 0.10320498, w: 0.8039193}
+    m_Target: {x: 0.41438276, y: 0.0640759, z: -0.029262207, w: 0.90737337}
     speed: 2
-    m_Value: {x: 0.56835854, y: -0.14613377, z: 0.103424236, w: 0.8030672}
+    m_Value: {x: -0.41438273, y: -0.0640759, z: 0.029262206, w: -0.9073733}
   m_Size:
-    m_Target: 127.88147
+    m_Target: 149.84344
     speed: 2
-    m_Value: 122.37461
+    m_Value: 149.84344
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -564,9 +564,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 94270000
-      m_LastClickedID: 0
-      m_ExpandedIDs: a046feffd846feff78fbffff
+      m_SelectedIDs: 4cfbffff
+      m_LastClickedID: -1204
+      m_ExpandedIDs: 4efbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -634,15 +634,15 @@ MonoBehaviour:
   m_StartGridSize: 64
   m_LastFolders: []
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\Giacomo Deodato\Desktop\Unity Projects\New Unity Project
-    (2)
+  m_LastProjectPath: C:\Users\Giacomo Deodato\Documents\GitHub\SimplexMan\New Unity
+    Project (2)
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 02340000
     m_LastClickedID: 13314
-    m_ExpandedIDs: ffffffff000000009c2d0000c62d0000242f00006c2f00005eb20000
+    m_ExpandedIDs: ffffffff000000009e2d0000b42e0000262f000068b20000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -670,7 +670,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff000000009c2d0000b22e0000242f00005eb20000
+    m_ExpandedIDs: ffffffff000000009e2d0000b42e0000262f000068b20000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
