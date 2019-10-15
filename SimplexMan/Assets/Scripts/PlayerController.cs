@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour {
     public ParticleSystem deathEffect;
 
     public event System.Action PlayerInteraction;
+    public event System.Action StartRecording;
+    public event System.Action StopRecording;
 
     bool isDownInteract = false;
     bool isRecording = false;
@@ -79,11 +81,17 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("Clone") && !isRecording) {
             isRecording = true;
             recordings = new Recordings();
+            if (StartRecording != null) {
+                StartRecording();
+            }
             StartCoroutine("Record", recordings);
         }
         if (Input.GetButtonUp("Clone") && isRecording) {
             isRecording = false;
             StopCoroutine("Record");
+            if (StopRecording != null) {
+                StopRecording();
+            }
             StartCoroutine("SymplexMan", recordings);
         }
     }
@@ -93,7 +101,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     IEnumerator Record(Recordings recordings) {
-        int index = 0;
         while (true) {
             recordings.position.Add(transform.position);
             recordings.rotation.Add(transform.rotation);
@@ -104,7 +111,6 @@ public class PlayerController : MonoBehaviour {
             } else {
                 recordings.isInteracting.Add(false);
             }
-            index++;
             yield return null;
         }
         
