@@ -11,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{68935561-146A-092C-1CE2-388EF65D57EF}</ProjectGuid>
+    <ProjectGuid>{CBE92F75-E174-2BD2-534D-B436E73E3B14}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -62,37 +62,37 @@
      <Compile Include="Assets\Scripts\Utility.cs" />
      <Compile Include="Assets\Scripts\WaveGenerator.cs" />
  <Reference Include="Unity.Timeline.Editor">
- <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/New Unity Project (2)/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VSCode.Editor">
- <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/New Unity Project (2)/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/New Unity Project (2)/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/New Unity Project (2)/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
- <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/New Unity Project (2)/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/New Unity Project (2)/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+ <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Postprocessing.Editor">
- <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/New Unity Project (2)/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+ <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
- <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/New Unity Project (2)/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Postprocessing.Runtime">
- <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/New Unity Project (2)/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+ <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/New Unity Project (2)/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/New Unity Project (2)/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.3f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
