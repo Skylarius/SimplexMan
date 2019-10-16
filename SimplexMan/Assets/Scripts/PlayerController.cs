@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
     public Vector2 cameraRotationXRange = new Vector2(10, 35);
     [Header("Symplex Man")]
     public GameObject clonePrefab;
-    public ParticleSystem deathEffect;
+    public GameObject deathEffect;
 
     public event System.Action PlayerInteraction;
     public event System.Action StartRecording;
@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour {
         }
         Vector3 deathPosition = cloneT.position;
         Destroy(clone);
-        Destroy(Instantiate(deathEffect.gameObject, deathPosition, Quaternion.identity), 2);
+        Destroy(Instantiate(deathEffect, deathPosition, Quaternion.identity), 2);
     }
 
     class Recordings {

@@ -41,13 +41,14 @@ public class FloorTile : MonoBehaviour {
         Color startColor = material.color;
         float percentage = 0;
 
-        while (percentage < 1) {
+        while (percentage <= 1) {
 
             material.color = Color.Lerp(startColor, overColorPlayer, percentage);
 
             percentage += Time.deltaTime * enterSpeed;
             yield return null;
         }
+        material.color = overColorPlayer;
     }
 
     IEnumerator OnClone(GameObject clone) {
@@ -55,13 +56,14 @@ public class FloorTile : MonoBehaviour {
         Color startColor = material.color;
         float percentage = 0;
 
-        while (percentage < 1) {
+        while (percentage <= 1) {
 
             material.color = Color.Lerp(startColor, overColorClone, percentage);
 
             percentage += Time.deltaTime * enterSpeed;
             yield return null;
         }
+        material.color = overColorClone;
 
         while(true) {
             if (clone == null) {
@@ -77,12 +79,13 @@ public class FloorTile : MonoBehaviour {
         Color startColor = material.color;
         float percentage = 0;
 
-        while (percentage < 1) {
+        while (percentage <= 1) {
 
             material.color = Color.Lerp(startColor, defaultColor, percentage);
 
             percentage += Time.deltaTime * exitSpeed;
             yield return null;
         }
+        material.color = defaultColor;
     }
 }
