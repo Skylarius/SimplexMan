@@ -13,10 +13,9 @@ GameObject:
   - component: {fileID: 7532083251791982769}
   - component: {fileID: 2778223058212006808}
   - component: {fileID: 719929473973412604}
-  - component: {fileID: -8372936198832885060}
   m_Layer: 11
   m_Name: Clone
-  m_TagString: Player
+  m_TagString: Clone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,15 +110,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &-8372936198832885060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3799688198043137592}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8966b035911c21840883225b90c855a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

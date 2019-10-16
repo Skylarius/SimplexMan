@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class FloorTile : MonoBehaviour {
 
-    public Color overColor;
+    public Color overColorPlayer;
+    public Color overColorClone;
     public float enterSpeed;
     public float exitSpeed;
 
@@ -15,23 +16,22 @@ public class FloorTile : MonoBehaviour {
         defaultColor = GetComponent<Renderer>().material.color;
     }
 
-    // void Update() {
-    //     if (collidingObject == null) {
-    //         StartCoroutine("Off");
-    //     }
-    // }
-
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag == "Player") {
-            //collidingObject = collision.gameObject.transform;
             StopCoroutine("Off");
             StartCoroutine("On");
+        } else if (collision.gameObject.tag == "Clone") {
+            StopCoroutine("Off");
+            StartCoroutine("OnClone", collision.gameObject);
         }
     }
 
     void OnCollisionExit(Collision collision) {
         if (collision.gameObject.tag == "Player") {
             StopCoroutine("On");
+            StartCoroutine("Off");
+        } else if (collision.gameObject.tag == "Clone") {
+            StopCoroutine("OnClone");
             StartCoroutine("Off");
         }
     }
@@ -43,11 +43,33 @@ public class FloorTile : MonoBehaviour {
 
         while (percentage < 1) {
 
-            material.color = Color.Lerp(startColor, overColor, percentage);
+            material.color = Color.Lerp(startColor, overColorPlayer, percentage);
 
             percentage += Time.deltaTime * enterSpeed;
             yield return null;
         }
+    }
+
+    IEnumerator OnClone(GameObject clone) {
+        Material material = GetComponent<Renderer>().material;
+        Color startColor = material.color;
+        float percentage = 0;
+
+        while (percentage < 1) {
+
+            material.color = Color.Lerp(startColor, overColorClone, percentage);
+
+            percentage += Time.deltaTime * enterSpeed;
+            yield return null;
+        }
+
+        while(true) {
+            if (clone == null) {
+                break;
+            }
+            yield return null;
+        }
+        StartCoroutine("Off");
     }
 
     IEnumerator Off() {

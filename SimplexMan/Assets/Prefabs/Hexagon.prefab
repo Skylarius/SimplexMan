@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 091e172102a489044bfc9c3902b960b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overColor: {r: 0.4009434, g: 1, b: 0.95340663, a: 1}
+  overColorPlayer: {r: 0.25943398, g: 1, b: 0.99087405, a: 0}
+  overColorClone: {r: 1, g: 0.8386364, b: 0.28773582, a: 0}
   enterSpeed: 3
   exitSpeed: 1
