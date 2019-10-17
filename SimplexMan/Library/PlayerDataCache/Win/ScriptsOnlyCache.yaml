@@ -25,7 +25,6 @@ ScriptsOnlyBuild:
     - UnityEngine.Rendering.PostProcessing.Vignette
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
-    - UnityEditor.TestTools.TestRunner.TestListCacheData
   sceneClasses:
     Assets/Scenes/New Scene.unity:
     - Class: 1
@@ -83,17 +82,17 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10470}
     - Class: 114
-      Script: {instanceID: 10630}
+      Script: {instanceID: 10632}
     - Class: 114
-      Script: {instanceID: 10662}
+      Script: {instanceID: 10664}
     - Class: 114
-      Script: {instanceID: 10800}
+      Script: {instanceID: 10802}
     - Class: 114
-      Script: {instanceID: 11406}
+      Script: {instanceID: 11408}
     - Class: 114
-      Script: {instanceID: 11488}
+      Script: {instanceID: 11490}
     - Class: 114
-      Script: {instanceID: 11530}
+      Script: {instanceID: 11532}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 136
@@ -371,7 +370,7 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: 2af81c3dd14f36521c053765fb821faf
+      Hash: 78d620c0b6d37a341b2b6f7aea9be03e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MapGeneratorAdvanced
@@ -660,5 +659,4 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/New Scene.unity
-  playerPath: C:/Users/Giacomo Deodato/Desktop/Unity Projects/New Unity Project (2)/Build/New
-    Unity Project (2).exe
+  playerPath: C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Build/SymplexMan.exe
