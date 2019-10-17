@@ -65,3 +65,4 @@ MonoBehaviour:
   exitSpeed: 2
   vignetteSymplexColor: {r: 0.94847727, g: 0, b: 1, a: 1}
   chromaticAberrationSymplexIntensity: 1
+  lensDistortionSymplexIntensity: -50
