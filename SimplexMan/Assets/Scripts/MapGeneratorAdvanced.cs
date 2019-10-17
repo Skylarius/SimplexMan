@@ -28,9 +28,10 @@ public class MapGeneratorAdvanced : MonoBehaviour {
     [Header("Border and walls")]
     [Range(0, 1)]
     public float wallPercent;
+    public Vector2 wallsHeightRange;
     public int borderLayers;
     public float borderLayerOffset;
-    public Vector2 wallsHeightRange;
+    public Vector2 bordersHeightRange;
 
     [Header("Prefabs")]
     public Transform tilePrefab;
@@ -86,6 +87,14 @@ public class MapGeneratorAdvanced : MonoBehaviour {
         int currentWallSectorsCount = 0;
 
         List<Vector2Int> freeSectorsCoords = new List<Vector2Int>(sectorsCoords);
+        float[,] noiseMap = Noise.GenerateNoiseMap(mapSize.x * sectorSize, 
+                                                   mapSize.y * sectorSize,
+                                                   seed,
+                                                   10,
+                                                   8,
+                                                   0.8f,
+                                                   4,
+                                                   Vector2.one);
 
         for (int i = 0; i < wallSectorsCount; i++) {
             Vector2Int randomCoord = GetRandomSectorCoord();
@@ -93,7 +102,7 @@ public class MapGeneratorAdvanced : MonoBehaviour {
             currentWallSectorsCount++;
 
             if (randomCoord != Vector2Int.zero && Utility.FloodFill(wallSectorsMap, currentWallSectorsCount, mapSize.x*mapSize.y, Vector2Int.zero)) {
-                GenerateWallSector(randomCoord, wallsHolder);
+                GenerateWallSector(noiseMap, randomCoord, wallsHolder);
                 freeSectorsCoords.Remove(randomCoord);
             } else {
                 wallSectorsMap[randomCoord.x, randomCoord.y] = false;
@@ -129,7 +138,7 @@ public class MapGeneratorAdvanced : MonoBehaviour {
                                                                 Quaternion.identity) as Transform;
                             newObstacle.parent = holder;
                             newObstacle.localScale = new Vector3(tileSize, 
-                                                                 RandomRange(wallsHeightRange.x, wallsHeightRange.y) + borderLayerOffset * (b-1), 
+                                                                 RandomRange(bordersHeightRange.x, bordersHeightRange.y) + borderLayerOffset * (b-1), 
                                                                  tileSize);
 
                             Renderer obstacleRenderer = newObstacle.GetComponentInChildren<Renderer>();
@@ -150,17 +159,22 @@ public class MapGeneratorAdvanced : MonoBehaviour {
         return sectorCoord;
     }
 
-    void GenerateWallSector(Vector2Int sectorCoord, Transform holder) {
+    void GenerateWallSector(float[,] noiseMap, Vector2Int sectorCoord, Transform holder) {
         for (int x = 0; x < sectorSize; x++) {
             for (int y = 0; y < sectorSize; y++) {
-                Vector3 obstaclePosition = CoordToHexPosition(new Vector2Int(x, y) + sectorCoord * sectorSize);
+                Vector2Int absoluteCoord = new Vector2Int(x, y) + sectorCoord * sectorSize;
+                Vector3 obstaclePosition = CoordToHexPosition(absoluteCoord);
                 Transform newObstacle = Instantiate(obstaclePrefab, 
                                                     obstaclePosition,// + Vector3.up * obstacleHeight / 2, 
                                                     Quaternion.identity) as Transform;
                 newObstacle.parent = holder;
+                float yScale = wallsHeightRange.x + noiseMap[absoluteCoord.x, absoluteCoord.y] * (wallsHeightRange.y - wallsHeightRange.x);
                 newObstacle.localScale = new Vector3(tileSize, 
-                                                    RandomRange(wallsHeightRange.x, wallsHeightRange.y), 
-                                                    tileSize);
+                                                     yScale, //RandomRange(wallsHeightRange.x, wallsHeightRange.y), 
+                                                     tileSize);
+                if (noiseMap[absoluteCoord.x, absoluteCoord.y] < 0) {
+                    print(noiseMap[absoluteCoord.x, absoluteCoord.y]);
+                }
 
                 Renderer obstacleRenderer = newObstacle.GetComponentInChildren<Renderer>();
                 Material obstacleMaterial = new Material(obstacleRenderer.sharedMaterial);

@@ -275,8 +275,9 @@ MonoBehaviour:
   speed: 15
   rotationSpeed: 5
   jumpForce: 300
+  airFriction: 0
   cameraRotSpeed: 1
-  cameraRotationXRange: {x: 25, y: 35}
+  cameraRotationXRange: {x: 10, y: 35}
   clonePrefab: {fileID: 3799688198043137592, guid: da838bcbd9b39a14abbcfd049f26b5ff,
     type: 3}
   deathEffect: {fileID: 2799673608838946783, guid: bbc56886e54ffb0428ba3b91fcc4d797,

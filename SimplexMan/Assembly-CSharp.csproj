@@ -53,7 +53,8 @@
      <Compile Include="Assets\Scripts\PostProcessingSwitch.cs" />
      <Compile Include="Assets\Scripts\Recordable.cs" />
      <Compile Include="Assets\Scripts\RecordableTransform.cs" />
-     <Compile Include="Assets\Scripts\Utility.cs" />
+     <Compile Include="Assets\Scripts\Static\Noise.cs" />
+     <Compile Include="Assets\Scripts\Static\Utility.cs" />
      <Compile Include="Assets\Scripts\WaveGenerator.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

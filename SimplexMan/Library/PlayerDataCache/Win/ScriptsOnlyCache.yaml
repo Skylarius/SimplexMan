@@ -287,7 +287,7 @@ ScriptsOnlyBuild:
     className: Vignette
   - hash:
       serializedVersion: 2
-      Hash: af3e703005b797a916460d100d33dad6
+      Hash: af467233095d424306fd3b34e459c53b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -449,7 +449,7 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 0e78f7d5bdd2f1ef665327627e46f05a
+      Hash: d185844fc691eccf582b9188ef6cd6d7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PostProcessingSwitch
