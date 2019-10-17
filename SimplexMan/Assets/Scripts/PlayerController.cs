@@ -10,12 +10,14 @@ public class PlayerController : MonoBehaviour {
 	public string mouseX = "Mouse X";
     public string mouseY = "Mouse Y";
     [Header("Movement")]
-    public float speed = 20.0F;
-    public float rotationSpeed = 2;
-    public float jumpForce = 200;
+    public float speed = 15.0F;
+    public float rotationSpeed = 5;
+    public float jumpForce = 300;
+    [Range(0, 1)]
+    public float airFriction;
     [Header("Camera")]
     public float cameraRotSpeed = 1;
-    public Vector2 cameraRotationXRange = new Vector2(10, 35);
+    public Vector2 cameraRotationXRange = new Vector2(25, 35);
     [Header("Symplex Man")]
     public GameObject clonePrefab;
     public GameObject deathEffect;
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour {
     Recordings recordings;
     
     float currentCameraRotX = 0f;
+    Vector3 jumpStartVelocity;
     Camera myCamera;
     Rigidbody rb;
     
@@ -40,9 +43,18 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate() {
 
+        // Movement Input  
+        Vector3 moveHorizontal = transform.right * Input.GetAxisRaw(Horizontal);
+        Vector3 moveVertical = transform.forward * Input.GetAxisRaw(Vertical);
+        Vector3 direction = (moveHorizontal + moveVertical).normalized; 
+        Vector3 velocity = direction * speed;
+
         if (IsGrounded()) {
+            rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
+
             // Jump Input
             if (Input.GetButtonDown("Jump")) {
+                jumpStartVelocity = velocity;
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
 
@@ -50,17 +62,12 @@ public class PlayerController : MonoBehaviour {
             float yRot = Input.GetAxisRaw(mouseX);              
             Vector3 rotation = new Vector3(0f, yRot, 0f) * rotationSpeed;
             rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
-        }
-
-        // Movement Input
-        float xMov = 0;
-        if (IsGrounded()) {
-            xMov = Input.GetAxisRaw(Horizontal);
-        }    
-        Vector3 moveHorizontal = transform.right * xMov;
-        Vector3 moveVertical = transform.forward * Input.GetAxisRaw(Vertical);
-        Vector3 velocity = (moveHorizontal + moveVertical).normalized * speed;
-        rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
+        } else {
+            // Jump Movement
+            Vector3 airVelocity = jumpStartVelocity + new Vector3(velocity.x, 0, velocity.z) * (1 - airFriction);
+            airVelocity = Vector3.ClampMagnitude(airVelocity, speed);
+            rb.velocity = airVelocity + Vector3.up * rb.velocity.y;
+        }        
 
         // Camera Input
         float xRot = Input.GetAxisRaw(mouseY);

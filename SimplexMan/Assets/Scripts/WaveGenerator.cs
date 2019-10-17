@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaveGenerator : MonoBehaviour
-{
-    //public enum WaveType {Drop, Longitudinal};
+public class WaveGenerator : MonoBehaviour {
 
-    //public WaveType waveType;
     public GameObject hexWave;
     public float secondsBetweenWaves;
     public float secondsBetweenUnits;
