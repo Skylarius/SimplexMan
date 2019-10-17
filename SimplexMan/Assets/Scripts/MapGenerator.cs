@@ -125,7 +125,7 @@ public class MapGenerator : MonoBehaviour {
             obstacleMap[randomCoord.x, randomCoord.y] = true;
             currentObstacleCount++;
 
-            if (randomCoord != currentMap.mapCenter && Utility.FloodFill(obstacleMap, currentObstacleCount, currentMap.mapSize)) {
+            if (randomCoord != currentMap.mapCenter && Utility.FloodFill(obstacleMap, currentObstacleCount, currentMap.mapSize.x * currentMap.mapSize.y, Vector2Int.zero)) {
                 float obstacleHeight = Mathf.Lerp(currentMap.minObstacleHeight, currentMap.maxObstacleHeight, (float) prng.NextDouble());
                 Vector3 obstaclePosition = CoordToHexPosition(randomCoord.x, randomCoord.y);
 

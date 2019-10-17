@@ -17,13 +17,12 @@ public static class Utility {
         return array;
     }
 
-    public static bool FloodFill(bool[,] obstacleMap, int currentObstacleCount, Vector2Int mapSize) {
+    public static bool FloodFill(bool[,] obstacleMap, int currentObstacleCount, int freeTilesCount, Vector2Int drop) {
         bool[,] mapFlags = new bool[obstacleMap.GetLength(0), obstacleMap.GetLength(1)];
-        Vector2Int mapCenter = new Vector2Int(mapSize.x / 2, mapSize.y / 2);
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
         
-        queue.Enqueue(mapCenter);
-        mapFlags[mapCenter.x, mapCenter.y] = true;
+        queue.Enqueue(drop);
+        mapFlags[drop.x, drop.y] = true;
 
         int accessibleTileCount = 1;
 
@@ -46,8 +45,7 @@ public static class Utility {
                 }
             }
         }
-
-        int targetAccessibleTileCount = (int)(mapSize.x * mapSize.y - currentObstacleCount);
+        int targetAccessibleTileCount = freeTilesCount - currentObstacleCount;
         return targetAccessibleTileCount == accessibleTileCount;
     }
 

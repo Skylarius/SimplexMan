@@ -279,5 +279,5 @@ MonoBehaviour:
   cameraRotationXRange: {x: 25, y: 35}
   clonePrefab: {fileID: 3799688198043137592, guid: da838bcbd9b39a14abbcfd049f26b5ff,
     type: 3}
-  deathEffect: {fileID: 2284769624918753206, guid: 1cdf40ecee119d34da5fe24cc485855f,
+  deathEffect: {fileID: 2799673608838946783, guid: bbc56886e54ffb0428ba3b91fcc4d797,
     type: 3}
