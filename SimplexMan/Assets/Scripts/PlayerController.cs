@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
     public float jumpForce = 300;
     [Range(0, 1)]
     public float airFriction;
+    public float stunnedTime;
     [Header("Camera")]
     public float cameraRotSpeed = 1;
     public Vector2 cameraRotationXRange = new Vector2(25, 35);
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour {
     bool isDownInteract = false;
     bool isRecording = false;
     Recordings recordings;
+
+    bool isStunned = false;
     
     float currentCameraRotX = 0f;
     Vector3 jumpStartVelocity;
@@ -49,25 +52,27 @@ public class PlayerController : MonoBehaviour {
         Vector3 direction = (moveHorizontal + moveVertical).normalized; 
         Vector3 velocity = direction * speed;
 
-        if (IsGrounded()) {
-            rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
+        if (!isStunned) {
+            if (IsGrounded()) {
+                rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
 
-            // Jump Input
-            if (Input.GetButtonDown("Jump")) {
-                jumpStartVelocity = velocity;
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                // Jump Input
+                if (Input.GetButtonDown("Jump")) {
+                    jumpStartVelocity = velocity;
+                    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                }
+
+                // Rotation Input
+                float yRot = Input.GetAxisRaw(mouseX);              
+                Vector3 rotation = new Vector3(0f, yRot, 0f) * rotationSpeed;
+                rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
+            } else {
+                // Jump Movement
+                Vector3 airVelocity = jumpStartVelocity + new Vector3(velocity.x, 0, velocity.z) * (1 - airFriction);
+                airVelocity = Vector3.ClampMagnitude(airVelocity, speed);
+                rb.velocity = airVelocity + Vector3.up * rb.velocity.y;
             }
-
-            // Rotation Input
-            float yRot = Input.GetAxisRaw(mouseX);              
-            Vector3 rotation = new Vector3(0f, yRot, 0f) * rotationSpeed;
-            rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
-        } else {
-            // Jump Movement
-            Vector3 airVelocity = jumpStartVelocity + new Vector3(velocity.x, 0, velocity.z) * (1 - airFriction);
-            airVelocity = Vector3.ClampMagnitude(airVelocity, speed);
-            rb.velocity = airVelocity + Vector3.up * rb.velocity.y;
-        }        
+        }
 
         // Camera Input
         float xRot = Input.GetAxisRaw(mouseY);
@@ -105,6 +110,12 @@ public class PlayerController : MonoBehaviour {
 
     bool IsGrounded() {
         return Physics.Raycast(transform.position, Vector3.down, transform.localScale.y + 0.5f);
+    }
+
+    public void Stun() {
+        isStunned = true;
+        StopCoroutine("RecoverFromStunned");
+        StartCoroutine("RecoverFromStunned");
     }
 
     IEnumerator Record(Recordings recordings) {
@@ -154,6 +165,15 @@ public class PlayerController : MonoBehaviour {
         Vector3 deathPosition = cloneT.position;
         Destroy(clone);
         Destroy(Instantiate(deathEffect, deathPosition, Quaternion.identity), 2);
+    }
+
+    IEnumerator RecoverFromStunned() {
+        float recoveryTime = 0;
+        while (recoveryTime <= stunnedTime) {
+            recoveryTime += Time.deltaTime;
+            yield return null;
+        }
+        isStunned = false;
     }
 
     class Recordings {
