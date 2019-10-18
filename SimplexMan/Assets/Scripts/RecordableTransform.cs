@@ -13,11 +13,13 @@ public class RecordableTransform : Recordable {
     }
 
     public override void Record() {
-        recordings[recordingIndex].Add(new RecordedTransform(transform));
+        base.Record();
+        recordings[nClones].Add(new RecordedTransform(transform));
     }
 
     public override void Reproduce() {
-        RecordedTransform t = recordings[recordingIndex][reproductionIndex[recordingIndex]] as RecordedTransform;
+        base.Reproduce();
+        RecordedTransform t = recordings[nClones-1][reproductionIndex[nClones-1]] as RecordedTransform;
         transform.position = t.position;
         transform.rotation = t.rotation;
         transform.localScale = t.scale;

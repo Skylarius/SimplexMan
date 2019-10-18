@@ -44,14 +44,17 @@
     <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
-  <ItemGroup>     <Compile Include="Assets\Scripts\CloneController.cs" />
-     <Compile Include="Assets\Scripts\FloorTile.cs" />
+  <ItemGroup>     <Compile Include="Assets\Scripts\FloorTile.cs" />
      <Compile Include="Assets\Scripts\Interactable.cs" />
      <Compile Include="Assets\Scripts\MapGeneratorAdvanced.cs" />
+     <Compile Include="Assets\Scripts\MovingLoopingPlatform.cs" />
      <Compile Include="Assets\Scripts\Old\MapGenerator.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PostProcessingSwitch.cs" />
      <Compile Include="Assets\Scripts\Recordable.cs" />
+     <Compile Include="Assets\Scripts\RecordableInteraction.cs" />
+     <Compile Include="Assets\Scripts\RecordablePhysics.cs" />
+     <Compile Include="Assets\Scripts\RecordablePlayer.cs" />
      <Compile Include="Assets\Scripts\RecordableTransform.cs" />
      <Compile Include="Assets\Scripts\Static\Noise.cs" />
      <Compile Include="Assets\Scripts\Static\Utility.cs" />

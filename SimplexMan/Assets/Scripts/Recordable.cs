@@ -6,10 +6,12 @@ public class Recordable : MonoBehaviour {
        
     public enum State {Idle, Reproducing};
     public State state = State.Idle;
-    public int recordingIndex = -1;
-    public List<int> reproductionIndex = new List<int>();
-
+    public int nClones = 0;
+    
     public List<List<RecordedItem>> recordings;
+    public List<int> reproductionIndex = new List<int>();
+    // keeps track of the number of frames recorded in tha current recording (not all of them)
+    public int nRecordedFrames = 0;
 
     public virtual void Start() {
         recordings = new List<List<RecordedItem>>();
@@ -19,26 +21,29 @@ public class Recordable : MonoBehaviour {
 
     public virtual void Update() {
         if (state == State.Reproducing) {
-            if (reproductionIndex[recordingIndex] >= recordings[recordingIndex].Count) {
-                recordings.RemoveAt(recordingIndex);
-                recordingIndex--;
-                if (recordingIndex == -1) {
+            if (reproductionIndex[nClones-1] >= recordings[nClones-1].Count) {
+                recordings.RemoveAt(nClones-1);
+                reproductionIndex.RemoveAt(nClones-1);
+                nClones--;
+                if (nClones == 0) {
                     state = State.Idle;
                 }
             } else {
                 Reproduce();
-                reproductionIndex[recordingIndex]++;
+                reproductionIndex[nClones-1]++;
             }
         }        
     }
 
     public virtual void StartRecording() {
-        recordingIndex++;
         recordings.Add(new List<RecordedItem>());
+        nRecordedFrames = 0;
         StartCoroutine("ERecord");
     }
 
     public virtual void StopRecording() {
+        StopCoroutine("ERecord");
+        nClones++;
         reproductionIndex.Add(0);
         state = State.Reproducing;
     }
@@ -50,52 +55,11 @@ public class Recordable : MonoBehaviour {
         }
     }
 
-    public virtual void Record() { }
+    public virtual void Record() {
+        nRecordedFrames++;
+    }
 
     public virtual void Reproduce() { }
 
-    public class RecordedItem {
-
-    }
+    public class RecordedItem { }
 }
-
-/*
-
-// OLD VERSION
-
-public virtual void Start() {
-        FindObjectOfType<PlayerController>().StartRecording += StartRecording;
-        FindObjectOfType<PlayerController>().StopRecording += StopRecording;
-    }
-
-    public virtual void StartRecording() {
-        StartCoroutine("ERecord");
-    }
-
-    public virtual void StopRecording() {
-        StopCoroutine("ERecord");
-        StartCoroutine("EReproduce");
-    }
-
-    public virtual void Record() {
-        recordLength++;
-    }
-
-    public virtual void Reproduce(int i) {
-        
-    }
-
-    IEnumerator ERecord() {
-        while (true) {
-            Record();
-            yield return null;
-        }
-    }
-
-    IEnumerator EReproduce() {
-        for (int i = 0; i < recordLength; i++) {
-            Reproduce(i);
-            yield return null;
-        }
-    }
-*/

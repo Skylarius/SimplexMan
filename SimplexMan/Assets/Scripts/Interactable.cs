@@ -2,64 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : Recordable {
+public class Interactable : RecordableInteraction {
     
     public float speed;
-
-    // Interaction variables
-    bool isEnabled = false;
     Animator animator;
     int setActiveHash = Animator.StringToHash("setActive");
-    bool setActive = false;
-
-    // Recording variables
-    bool initialActivatedState;
 
     public override void Start() {
         base.Start();
-        FindObjectOfType<PlayerController>().PlayerInteraction += PlayerInteraction;
         animator = GetComponent<Animator>();
         animator.speed = speed;
     }
 
-    //
-    // Interaction functions
-    //
-
-    void OnTriggerEnter(Collider collider) {
-        if (collider.tag == "Player" || collider.tag == "Clone") {
-            isEnabled = true;
-        }
+    public override void Update() {
+        base.Update();
     }
 
-    void OnTriggerExit(Collider collider) {
-        if (collider.tag == "Player" || collider.tag == "Clone") {
-            isEnabled = false;
-        }
+    protected override void InteractionFunction(bool _isActive) {
+        animator.SetBool(setActiveHash, _isActive);
     }
-
-    void PlayerInteraction() {
-        if (isEnabled) {
-            setActive = !setActive;
-            animator.SetBool(setActiveHash, setActive);
-        }
-    }
-
-    //
-    // Recording functions
-    //
-
-    public override void StartRecording() {
-        initialActivatedState = setActive;
-        base.StartRecording();
-    }
-
-    public override void StopRecording() {
-        if (setActive != initialActivatedState) {
-            setActive = initialActivatedState;
-            animator.SetBool(setActiveHash, setActive);
-        }
-        base.StopRecording();
-    }
-
 }
