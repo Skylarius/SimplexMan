@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject deathEffect;
 
     public event System.Action PlayerInteraction;
+    public event System.Action StopPlayerInteraction;
     public event System.Action StartRecording;
     public event System.Action StopRecording;
 
@@ -85,8 +86,9 @@ public class PlayerController : MonoBehaviour {
             isDownInteract = true;
             PlayerInteraction();
         }
-        if (Input.GetButtonUp("Interact")) {
+        if (Input.GetButtonUp("Interact") && isDownInteract) {
             isDownInteract = false;
+            StopPlayerInteraction();
         }
 
         // Cloning Input

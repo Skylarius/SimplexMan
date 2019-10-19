@@ -49,6 +49,16 @@ public static class Utility {
         return targetAccessibleTileCount == accessibleTileCount;
     }
 
+    public static Vector3 CoordToHexPosition(Vector2Int coord, float scale) {
+        // Vector2Int absoluteMapSize = mapSize * sectorSize;
+        // return new Vector3(Mathf.Sqrt(3) * (-absoluteMapSize.x/2 + coord.x + (coord.y%2==0?0:0.5f)), 
+        //                    0, 
+        //                    1.5f * (-absoluteMapSize.y/2 + coord.y)) * tileSize;
+        return new Vector3(Mathf.Sqrt(3) * (coord.x + (coord.y%2==0?0:0.5f)), 
+                           0, 
+                           1.5f * (coord.y)) * scale;
+    }
+
     public static Vector2Int HexNext(Vector2Int coords, int direction) {
         switch(direction) {
             case 0:

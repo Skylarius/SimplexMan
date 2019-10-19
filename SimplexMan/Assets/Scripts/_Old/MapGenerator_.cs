@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator : MonoBehaviour {
+public class MapGenerator_ : MonoBehaviour {
 
     public Map[] maps;
     public int mapIndex;

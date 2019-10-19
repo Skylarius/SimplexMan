@@ -44,11 +44,13 @@
     <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
-  <ItemGroup>     <Compile Include="Assets\Scripts\_Old\MapGenerator.cs" />
+  <ItemGroup>     <Compile Include="Assets\Scripts\_Old\MapGenerator_.cs" />
      <Compile Include="Assets\Scripts\Map\FloorTile.cs" />
-     <Compile Include="Assets\Scripts\Map\MapGeneratorAdvanced.cs" />
-     <Compile Include="Assets\Scripts\Objects\ElectricCollider.cs" />
-     <Compile Include="Assets\Scripts\Objects\Interactable.cs" />
+     <Compile Include="Assets\Scripts\Map\MapGenerator.cs" />
+     <Compile Include="Assets\Scripts\Objects\Button.cs" />
+     <Compile Include="Assets\Scripts\Objects\Electric Wall\ElectricCollider.cs" />
+     <Compile Include="Assets\Scripts\Objects\Electric Wall\ElectricWall.cs" />
+     <Compile Include="Assets\Scripts\Objects\Electric Wall\ElectricWallGenerator.cs" />
      <Compile Include="Assets\Scripts\Objects\MovingLoopingPlatform.cs" />
      <Compile Include="Assets\Scripts\Objects\WaveGenerator.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />

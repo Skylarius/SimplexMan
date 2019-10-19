@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGeneratorAdvanced : MonoBehaviour {
+public class MapGenerator : MonoBehaviour {
 
     public int seed;
     public string mapName = "generated Map";
@@ -132,7 +132,7 @@ public class MapGeneratorAdvanced : MonoBehaviour {
                 for (int x = -b; x < absoluteMapSize.x + b; x++) {
                     for (int y = -b; y < absoluteMapSize.y + b; y++) {
                         if (x == -b || x == absoluteMapSize.x - 1 + b || y == -b || y >= absoluteMapSize.y - 1 + b) {
-                            Vector3 obstaclePosition = CoordToHexPosition(new Vector2Int(x, y));
+                            Vector3 obstaclePosition = Utility.CoordToHexPosition(new Vector2Int(x, y), tileSize);
                             Transform newObstacle = Instantiate(obstaclePrefab, 
                                                                 obstaclePosition,// + Vector3.up * obstacleHeight / 2, 
                                                                 Quaternion.identity) as Transform;
@@ -163,7 +163,7 @@ public class MapGeneratorAdvanced : MonoBehaviour {
         for (int x = 0; x < sectorSize; x++) {
             for (int y = 0; y < sectorSize; y++) {
                 Vector2Int absoluteCoord = new Vector2Int(x, y) + sectorCoord * sectorSize;
-                Vector3 obstaclePosition = CoordToHexPosition(absoluteCoord);
+                Vector3 obstaclePosition = Utility.CoordToHexPosition(absoluteCoord, tileSize);
                 Transform newObstacle = Instantiate(obstaclePrefab, 
                                                     obstaclePosition,// + Vector3.up * obstacleHeight / 2, 
                                                     Quaternion.identity) as Transform;
@@ -182,13 +182,6 @@ public class MapGeneratorAdvanced : MonoBehaviour {
                 obstacleRenderer.sharedMaterial = obstacleMaterial;
             }
         }
-    }
-
-    Vector3 CoordToHexPosition(Vector2Int coord) {
-        Vector2Int absoluteMapSize = mapSize * sectorSize;
-        return new Vector3(Mathf.Sqrt(3) * (-absoluteMapSize.x/2 + coord.x + (coord.y%2==0?0:0.5f)), 
-                           0, 
-                           1.5f * (-absoluteMapSize.y/2 + coord.y)) * tileSize;
     }
 
     float RandomRange(float min, float max) {
@@ -231,7 +224,7 @@ public class MapGeneratorAdvanced : MonoBehaviour {
 
             if (randomCoord != Vector2Int.zero && Utility.FloodFill(obstacleMap, currentObstacleCount, obstacleMap.GetLength(0) * obstacleMap.GetLength(1), Vector2Int.zero)) {
                 float obstacleHeight = Mathf.Lerp(minObstacleHeight, maxObstacleHeight, (float) prng.NextDouble());
-                Vector3 obstaclePosition = CoordToHexPosition(randomCoord);
+                Vector3 obstaclePosition = Utility.CoordToHexPosition(randomCoord, tileSize);
 
                 Transform newObstacle = Instantiate(obstaclePrefab, 
                                                     obstaclePosition,// + Vector3.up * obstacleHeight / 2, 
@@ -258,7 +251,7 @@ public class MapGeneratorAdvanced : MonoBehaviour {
 
         // Spawning Tiles
         for (int i = 0; i < floorCoords.Count; i++) {
-            Vector3 tilePosition = CoordToHexPosition(floorCoords[i]);
+            Vector3 tilePosition = Utility.CoordToHexPosition(floorCoords[i], tileSize);
             Transform newTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as Transform;
             newTile.localScale = Vector3.one * (1 - outlinePercent) * tileSize;
             newTile.parent = floorHolder;

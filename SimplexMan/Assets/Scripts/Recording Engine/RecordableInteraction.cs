@@ -4,38 +4,16 @@ using UnityEngine;
 
 public class RecordableInteraction : Recordable {
 
-    public bool isActive = false;
+    public bool isActive;
 
     bool initialActivatedState;
-    bool isEnabled = false;
 
     public override void Start() {
         base.Start();
-        FindObjectOfType<PlayerController>().PlayerInteraction += PlayerInteraction;
     }
 
     public override void Update() {
         base.Update();
-    }
-
-    // Interaction functions
-    void OnTriggerEnter(Collider collider) {
-        if (collider.tag == "Player" || collider.tag == "Clone") {
-            isEnabled = true;
-        }
-    }
-
-    void OnTriggerExit(Collider collider) {
-        if (collider.tag == "Player" || collider.tag == "Clone") {
-            isEnabled = false;
-        }
-    }
-
-    void PlayerInteraction() {
-        if (isEnabled) {
-            isActive = !isActive;
-            InteractionFunction(isActive);
-        }
     }
 
     // If the value of isActive changes, it means there has been an interaction to record
