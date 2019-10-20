@@ -85,10 +85,12 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("Interact") && !isDownInteract) {
             isDownInteract = true;
             PlayerInteraction();
+            print("Down");
         }
         if (Input.GetButtonUp("Interact") && isDownInteract) {
             isDownInteract = false;
             StopPlayerInteraction();
+            print("Up");
         }
 
         // Cloning Input

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Button : RecordableInteraction {
+public class Button : RecordablePress {
     
     public ElectricWall objectToChange;
 
@@ -13,7 +13,6 @@ public class Button : RecordableInteraction {
 
     public override void Start() {
         base.Start();
-        base.isActive = true;
 
         animator = GetComponent<Animator>();
         animator.speed = speed;
@@ -42,12 +41,13 @@ public class Button : RecordableInteraction {
     void PlayerInteraction() {
         if (isEnabled) {
             isActive = !isActive;
-            InteractionFunction(isActive);
+            animator.SetBool(setActiveHash, isActive);
+            objectToChange.ChangeState(isActive);
         }
     }
 
-    protected override void InteractionFunction(bool _isActive) {
+    protected override void ResetState(bool _isActive) {
         animator.SetBool(setActiveHash, _isActive);
-        objectToChange.ChangeState(isActive);
+        objectToChange.ChangeState(_isActive);
     }
 }
