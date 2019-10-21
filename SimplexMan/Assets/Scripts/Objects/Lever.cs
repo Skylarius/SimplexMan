@@ -8,17 +8,20 @@ public class Lever : RecordableHold {
     
     public ElectricWall objectToChange;
     public float speed;
+    public Transform lever;
 
     bool isEnabled = false;
     bool isHolding = false;
     bool initialState;
-    float initialAngle = -35;
+    float initialAngle = -50;
 
     public override void Start() {
         base.Start();
         
         initialState = base.isActive;
-        transform.rotation = Quaternion.Euler(0, 0, -35);
+        Vector3 rot = lever.rotation.eulerAngles;
+        rot.z = initialAngle;
+        lever.rotation = Quaternion.Euler(rot);
 
         FindObjectOfType<PlayerController>().PlayerInteraction += PlayerInteraction;
         FindObjectOfType<PlayerController>().StopPlayerInteraction += StopPlayerInteraction;
@@ -62,18 +65,18 @@ public class Lever : RecordableHold {
     }
 
     protected override void ResetState(bool _isActive) {
-        Vector3 currentRot = transform.rotation.eulerAngles;
+        Vector3 currentRot = lever.rotation.eulerAngles;
         if (isActive) {
             currentRot.z = initialAngle;
         } else {
             currentRot.z = -initialAngle;
         }
-        transform.rotation = Quaternion.Euler(currentRot);
+        lever.rotation = Quaternion.Euler(currentRot);
         objectToChange.ChangeState(isActive);
     }
 
     IEnumerator Down() {
-        Vector3 currentRot = transform.rotation.eulerAngles;
+        Vector3 currentRot = lever.rotation.eulerAngles;
         float startRotZ = currentRot.z;
         if (startRotZ > 180) {
             startRotZ -= 360;
@@ -81,13 +84,13 @@ public class Lever : RecordableHold {
         float percentage = 0;
         while (percentage <= 1) {
             currentRot.z = Mathf.Lerp(startRotZ, -initialAngle, percentage);
-            transform.rotation = Quaternion.Euler(currentRot);
+            lever.rotation = Quaternion.Euler(currentRot);
 
             percentage += Time.deltaTime * speed;
             yield return null;
         }
         currentRot.z = -initialAngle;
-        transform.rotation = Quaternion.Euler(currentRot);
+        lever.rotation = Quaternion.Euler(currentRot);
         isActive = !isActive;
         objectToChange.ChangeState(isActive);
     }
@@ -97,7 +100,7 @@ public class Lever : RecordableHold {
             isActive = !isActive;
             objectToChange.ChangeState(isActive);
         }
-        Vector3 currentRot = transform.rotation.eulerAngles;
+        Vector3 currentRot = lever.rotation.eulerAngles;
         float startRotZ = currentRot.z;
         if (startRotZ > 180) {
             startRotZ -= 360;
@@ -105,13 +108,13 @@ public class Lever : RecordableHold {
         float percentage = 0;
         while (percentage <= 1) {
             currentRot.z = Mathf.Lerp(startRotZ, initialAngle, percentage);
-            transform.rotation = Quaternion.Euler(currentRot);
+            lever.rotation = Quaternion.Euler(currentRot);
 
             percentage += Time.deltaTime * speed;
             yield return null;
         }
         currentRot.z = initialAngle;
-        transform.rotation = Quaternion.Euler(currentRot);
+        lever.rotation = Quaternion.Euler(currentRot);
     }
 
     IEnumerator CheckClone(GameObject clone) {
@@ -121,6 +124,7 @@ public class Lever : RecordableHold {
             }
             yield return null;
         }
+        // should check some stuff before doing this
         StartCoroutine("Up");
     }
 }

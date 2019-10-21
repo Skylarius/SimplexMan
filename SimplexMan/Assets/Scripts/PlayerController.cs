@@ -139,36 +139,37 @@ public class PlayerController : MonoBehaviour {
     }
 
     IEnumerator SymplexMan(Recordings recordings) {
-        recordings.isInteracting = recordings.CleanList(recordings.isInteracting);
+        // recordings.isInteracting = recordings.CleanList(recordings.isInteracting);
         
-        transform.position = recordings.position[0];
-        transform.rotation = recordings.rotation[0];
-        transform.localScale = recordings.scale[0];
-        rb.velocity = recordings.velocity[0];
-        if (recordings.isInteracting[0]) {
-            PlayerInteraction();
-        }
+        // transform.position = recordings.position[0];
+        // transform.rotation = recordings.rotation[0];
+        // transform.localScale = recordings.scale[0];
+        // rb.velocity = recordings.velocity[0];
+        // if (recordings.isInteracting[0]) {
+        //     PlayerInteraction();
+        // }
 
-        GameObject clone = Instantiate(clonePrefab, 
-                                       recordings.position[0], 
-                                       recordings.rotation[0]);
+        // GameObject clone = Instantiate(clonePrefab, 
+        //                                recordings.position[0], 
+        //                                recordings.rotation[0]);
 
-        Rigidbody cloneRB = clone.GetComponent<Rigidbody>();
-        Transform cloneT = clone.GetComponent<Transform>();
+        // Rigidbody cloneRB = clone.GetComponent<Rigidbody>();
+        // Transform cloneT = clone.GetComponent<Transform>();
 
-        for (int i = 0; i < recordings.velocity.Count; i++) {
-            cloneT.position = recordings.position[i];
-            cloneT.rotation = recordings.rotation[i];
-            cloneT.localScale = recordings.scale[i];
-            cloneRB.velocity = recordings.velocity[i];
-            if (recordings.isInteracting[i]) {
-                PlayerInteraction();
-            }
-            yield return null;
-        }
-        Vector3 deathPosition = cloneT.position;
-        Destroy(clone);
-        Destroy(Instantiate(deathEffect, deathPosition, Quaternion.identity), 2);
+        // for (int i = 0; i < recordings.velocity.Count; i++) {
+        //     cloneT.position = recordings.position[i];
+        //     cloneT.rotation = recordings.rotation[i];
+        //     cloneT.localScale = recordings.scale[i];
+        //     cloneRB.velocity = recordings.velocity[i];
+        //     if (recordings.isInteracting[i]) {
+        //         PlayerInteraction();
+        //     }
+        //     yield return null;
+        // }
+        // Vector3 deathPosition = cloneT.position;
+        // Destroy(clone);
+        // Destroy(Instantiate(deathEffect, deathPosition, Quaternion.identity), 2);
+        yield return null;
     }
 
     IEnumerator RecoverFromStunned() {

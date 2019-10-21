@@ -12,13 +12,13 @@ public class ElectricCollider : MonoBehaviour {
     }
     
     void OnTriggerEnter(Collider collider) {
-        if (collider.tag == "Player") {
+        if (collider.tag == "Player" || collider.tag == "Clone") {
             Repulse(collider);
         }
     }
 
     void OnTriggerStay(Collider collider) {
-        if (collider.tag == "Player") {
+        if (collider.tag == "Player" || collider.tag == "Clone") {
             Repulse(collider);
         }
     }

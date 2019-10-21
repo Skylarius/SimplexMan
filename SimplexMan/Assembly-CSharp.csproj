@@ -52,8 +52,8 @@
      <Compile Include="Assets\Scripts\Objects\Electric Wall\ElectricWall.cs" />
      <Compile Include="Assets\Scripts\Objects\Electric Wall\ElectricWallGenerator.cs" />
      <Compile Include="Assets\Scripts\Objects\Lever.cs" />
-     <Compile Include="Assets\Scripts\Objects\MovingLoopingPlatform.cs" />
      <Compile Include="Assets\Scripts\Objects\WaveGenerator.cs" />
+     <Compile Include="Assets\Scripts\Objects\Wheel.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PostProcessingSwitch.cs" />
      <Compile Include="Assets\Scripts\Recording Engine\Recordable.cs" />

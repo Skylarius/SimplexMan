@@ -16,12 +16,6 @@ public class RecordablePress : Recordable {
         base.Update();
     }
 
-    // If the value of isActive changes, it means there has been an interaction to record
-    // ISSUE: the button does not activate when using the recorded value, probably because 
-    // the frame where the interaction is spawned by the clone is not the same frame where 
-    // the interaction is recorded
-    // SOLUTION: once the new cloning method is implemented the two frames will correspond
-    // automatically
     public override void Record() {
         if (nRecordedFrames == 0) {
             recordings[nClones].Add(new RecordedInteraction(false));
