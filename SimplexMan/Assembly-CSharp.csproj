@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PostProcessingSwitch.cs" />
      <Compile Include="Assets\Scripts\Recording Engine\Recordable.cs" />
+     <Compile Include="Assets\Scripts\Recording Engine\RecordableClone.cs" />
      <Compile Include="Assets\Scripts\Recording Engine\RecordableHold.cs" />
      <Compile Include="Assets\Scripts\Recording Engine\RecordablePhysics.cs" />
      <Compile Include="Assets\Scripts\Recording Engine\RecordablePlayer.cs" />

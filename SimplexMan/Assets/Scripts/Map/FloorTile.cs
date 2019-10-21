@@ -11,6 +11,7 @@ public class FloorTile : MonoBehaviour {
 
     Color defaultColor;
     Transform collidingObject;
+    bool checkPlayer = false;
 
     void Start() {
         defaultColor = GetComponent<Renderer>().material.color;
@@ -22,7 +23,7 @@ public class FloorTile : MonoBehaviour {
             StartCoroutine("On");
         } else if (collision.gameObject.tag == "Clone") {
             StopCoroutine("Off");
-            StartCoroutine("OnClone", collision.gameObject);
+            StartCoroutine("OnClone", collision.collider);
         }
     }
 
@@ -33,6 +34,17 @@ public class FloorTile : MonoBehaviour {
         } else if (collision.gameObject.tag == "Clone") {
             StopCoroutine("OnClone");
             StartCoroutine("Off");
+            checkPlayer = true;
+        }
+    }
+
+    void OnCollisionStay(Collision collision) {
+        if (checkPlayer) {
+            if (collision.gameObject.tag == "Player") {
+                StopCoroutine("Off");
+                StartCoroutine("On");
+            }
+            checkPlayer = false;
         }
     }
 
@@ -51,7 +63,7 @@ public class FloorTile : MonoBehaviour {
         material.color = overColorPlayer;
     }
 
-    IEnumerator OnClone(GameObject clone) {
+    IEnumerator OnClone(Collider clone) {
         Material material = GetComponent<Renderer>().material;
         Color startColor = material.color;
         float percentage = 0;
@@ -66,7 +78,7 @@ public class FloorTile : MonoBehaviour {
         material.color = overColorClone;
 
         while(true) {
-            if (clone == null) {
+            if (clone == null || !clone.enabled) {
                 break;
             }
             yield return null;

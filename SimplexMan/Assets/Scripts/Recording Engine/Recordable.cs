@@ -10,7 +10,7 @@ public class Recordable : MonoBehaviour {
     
     public List<List<RecordedItem>> recordings;
     public List<int> reproductionIndex = new List<int>();
-    // keeps track of the number of frames recorded in tha current recording (not all of them)
+    // keeps track of the number of frames recorded in that current recording (not all of them)
     public int nRecordedFrames = 0;
 
     public virtual void Start() {

@@ -4,11 +4,6 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
 
-    [Header("Input")]
-	public string Horizontal = "Horizontal";
-	public string Vertical = "Vertical";
-	public string mouseX = "Mouse X";
-    public string mouseY = "Mouse Y";
     [Header("Movement")]
     public float speed = 15.0F;
     public float rotationSpeed = 5;
@@ -20,7 +15,6 @@ public class PlayerController : MonoBehaviour {
     public float cameraRotSpeed = 1;
     public Vector2 cameraRotationXRange = new Vector2(25, 35);
     [Header("Symplex Man")]
-    public GameObject clonePrefab;
     public GameObject deathEffect;
 
     public event System.Action PlayerInteraction;
@@ -28,8 +22,6 @@ public class PlayerController : MonoBehaviour {
     public event System.Action StartRecording;
     public event System.Action StopRecording;
 
-    bool isDownInteract = false;
-    bool isRecording = false;
     Recordings recordings;
 
     bool isStunned = false;
@@ -38,77 +30,89 @@ public class PlayerController : MonoBehaviour {
     Vector3 jumpStartVelocity;
     Camera myCamera;
     Rigidbody rb;
-    
+    Vector3 velocity;
+    float rotation;
+    bool jumpInput;
+
+    Vector3 initialPosition;
+    Quaternion initialRotation;
 
     void Start(){
         rb = GetComponent<Rigidbody>();
         myCamera = GetComponentInChildren<Camera>();
 	}
 
-	void FixedUpdate() {
-
+    // Input should be taken in Update
+    // Non physical movement should be done here as well
+    void Update() {
+        
         // Movement Input  
-        Vector3 moveHorizontal = transform.right * Input.GetAxisRaw(Horizontal);
-        Vector3 moveVertical = transform.forward * Input.GetAxisRaw(Vertical);
+        Vector3 moveHorizontal = transform.right * Input.GetAxisRaw("Horizontal");
+        Vector3 moveVertical = transform.forward * Input.GetAxisRaw("Vertical");
         Vector3 direction = (moveHorizontal + moveVertical).normalized; 
-        Vector3 velocity = direction * speed;
+        velocity = direction * speed;
+
+        // Rotation Input
+        rotation = Input.GetAxisRaw("Mouse X");
+
+        // Jump Input
+        if (Input.GetButtonDown("Jump")) {
+            jumpInput = true;
+        }
+
+        // Camera Input
+        float xRot = Input.GetAxisRaw("Mouse Y");
+        currentCameraRotX -= xRot * cameraRotSpeed;
+        currentCameraRotX = Mathf.Clamp(currentCameraRotX, cameraRotationXRange.x, cameraRotationXRange.y);
+        myCamera.transform.localEulerAngles = new Vector3(currentCameraRotX, 0f, 0f); 
+
+        // Interaction Input
+        if (Input.GetButtonDown("Interact")) {
+            PlayerInteraction();
+        }
+        if (Input.GetButtonUp("Interact")) {
+            StopPlayerInteraction();
+        }
+
+        // Cloning Input
+        if (Input.GetButtonDown("Record")){
+            //recordings = new Recordings();
+            //Instantiate(clonePrefab, transform.position, transform.rotation);
+            initialPosition = transform.position;
+            initialRotation = transform.rotation;
+            StartRecording();         
+        }
+        if (Input.GetButtonUp("Record")){
+            StopRecording();
+            transform.position = initialPosition;
+            transform.rotation = initialRotation;
+        }
+    }
+
+    // Physics should be applied in FixedUpdate
+	void FixedUpdate() {
 
         if (!isStunned) {
             if (IsGrounded()) {
+                // Movement
                 rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
 
-                // Jump Input
-                if (Input.GetButtonDown("Jump")) {
+                // Rotation
+                Vector3 newRotation = new Vector3(0f, rotation, 0f) * rotationSpeed;
+                rb.MoveRotation(rb.rotation * Quaternion.Euler(newRotation));
+
+                // Jump
+                if (jumpInput) {
+                    jumpInput = false;
                     jumpStartVelocity = velocity;
                     rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 }
-
-                // Rotation Input
-                float yRot = Input.GetAxisRaw(mouseX);              
-                Vector3 rotation = new Vector3(0f, yRot, 0f) * rotationSpeed;
-                rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
             } else {
                 // Jump Movement
                 Vector3 airVelocity = jumpStartVelocity + new Vector3(velocity.x, 0, velocity.z) * (1 - airFriction);
                 airVelocity = Vector3.ClampMagnitude(airVelocity, speed);
                 rb.velocity = airVelocity + Vector3.up * rb.velocity.y;
             }
-        }
-
-        // Camera Input
-        float xRot = Input.GetAxisRaw(mouseY);
-        currentCameraRotX -= xRot * cameraRotSpeed;
-        currentCameraRotX = Mathf.Clamp(currentCameraRotX, cameraRotationXRange.x, cameraRotationXRange.y);
-        myCamera.transform.localEulerAngles = new Vector3(currentCameraRotX, 0f, 0f);
-
-        // Interaction Input
-        if (Input.GetButtonDown("Interact") && !isDownInteract) {
-            isDownInteract = true;
-            PlayerInteraction();
-            print("Down");
-        }
-        if (Input.GetButtonUp("Interact") && isDownInteract) {
-            isDownInteract = false;
-            StopPlayerInteraction();
-            print("Up");
-        }
-
-        // Cloning Input
-        if (Input.GetButtonDown("Clone") && !isRecording) {
-            isRecording = true;
-            recordings = new Recordings();
-            if (StartRecording != null) {
-                StartRecording();
-            }
-            StartCoroutine("Record", recordings);
-        }
-        if (Input.GetButtonUp("Clone") && isRecording) {
-            isRecording = false;
-            StopCoroutine("Record");
-            if (StopRecording != null) {
-                StopRecording();
-            }
-            StartCoroutine("SymplexMan", recordings);
         }
     }
 
@@ -122,17 +126,26 @@ public class PlayerController : MonoBehaviour {
         StartCoroutine("RecoverFromStunned");
     }
 
+    IEnumerator RecoverFromStunned() {
+        float recoveryTime = 0;
+        while (recoveryTime <= stunnedTime) {
+            recoveryTime += Time.deltaTime;
+            yield return null;
+        }
+        isStunned = false;
+    }
+
     IEnumerator Record(Recordings recordings) {
         while (true) {
             recordings.position.Add(transform.position);
             recordings.rotation.Add(transform.rotation);
             recordings.scale.Add(transform.localScale);
             recordings.velocity.Add(rb.velocity);
-            if (isDownInteract) {
-                recordings.isInteracting.Add(true);
-            } else {
-                recordings.isInteracting.Add(false);
-            }
+            // if (isDownInteract) {
+            //     recordings.isInteracting.Add(true);
+            // } else {
+            //     recordings.isInteracting.Add(false);
+            // }
             yield return null;
         }
         
@@ -172,14 +185,7 @@ public class PlayerController : MonoBehaviour {
         yield return null;
     }
 
-    IEnumerator RecoverFromStunned() {
-        float recoveryTime = 0;
-        while (recoveryTime <= stunnedTime) {
-            recoveryTime += Time.deltaTime;
-            yield return null;
-        }
-        isStunned = false;
-    }
+    
 
     class Recordings {
         public List<Vector3> position = new List<Vector3>();

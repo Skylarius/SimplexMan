@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7532083251791982769}
   - component: {fileID: 2778223058212006808}
   - component: {fileID: 719929473973412604}
+  - component: {fileID: 5928353242496351170}
   m_Layer: 11
   m_Name: Clone
   m_TagString: Clone
@@ -110,3 +111,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &5928353242496351170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3799688198043137592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac12fd5a75c23f7428d86c1fdceef480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  nClones: 0
+  reproductionIndex: 
+  nRecordedFrames: 0
+  deathEffect: {fileID: 2799673608838946783, guid: bbc56886e54ffb0428ba3b91fcc4d797,
+    type: 3}
