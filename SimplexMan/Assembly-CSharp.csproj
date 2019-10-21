@@ -60,10 +60,10 @@
      <Compile Include="Assets\Scripts\Recording Engine\Recordable.cs" />
      <Compile Include="Assets\Scripts\Recording Engine\RecordableClone.cs" />
      <Compile Include="Assets\Scripts\Recording Engine\RecordableHold.cs" />
-     <Compile Include="Assets\Scripts\Recording Engine\RecordablePhysics.cs" />
      <Compile Include="Assets\Scripts\Recording Engine\RecordablePlayer.cs" />
      <Compile Include="Assets\Scripts\Recording Engine\RecordablePress.cs" />
      <Compile Include="Assets\Scripts\Recording Engine\RecordableTransform.cs" />
+     <Compile Include="Assets\Scripts\Recording Engine\RecordableWheel.cs" />
      <Compile Include="Assets\Scripts\Static\Noise.cs" />
      <Compile Include="Assets\Scripts\Static\Utility.cs" />
  <Reference Include="Unity.Timeline.Editor">

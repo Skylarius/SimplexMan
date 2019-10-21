@@ -48,7 +48,18 @@ public class Controller : MonoBehaviour {
         if (jump) {
             jumpInput = true;
         }
+
+        // Interaction Input
+        if (interactDown) {
+            Interact();
+        }
+        if (interactUp) {
+            StopInteract();
+        }
     }
+
+    public virtual void Interact() {}
+    public virtual void StopInteract() {}
 
     // Physics should be applied in FixedUpdate
     protected virtual void FixedUpdate() {

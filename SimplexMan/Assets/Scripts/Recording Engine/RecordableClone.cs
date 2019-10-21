@@ -22,15 +22,6 @@ public class RecordableClone : Controller {
 
     protected override void Update() {
         base.Update();
-
-        // Interaction Input
-        if (interactDown) {
-            //PlayerInteraction();
-        }
-        if (interactUp) {
-            //StopPlayerInteraction();
-        }
-
         index++;
     }
 
@@ -69,6 +60,14 @@ public class RecordableClone : Controller {
                 Destroy(gameObject);
             }
         }
+    }
+
+    public override void Interact() {
+        FindObjectOfType<PlayerController>().Interact();
+    }
+
+    public override void StopInteract() {
+        FindObjectOfType<PlayerController>().StopInteract();
     }
 
     void SetVisibility() {

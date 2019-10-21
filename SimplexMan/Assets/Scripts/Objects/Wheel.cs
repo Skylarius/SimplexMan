@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wheel : RecordableHold {
+public class Wheel : RecordableWheel {
     
     public float speed;
     public float wallSpeed;
@@ -59,13 +59,13 @@ public class Wheel : RecordableHold {
     }
 
     protected override void ResetState(bool _isActive) {
-        Vector3 currentRot = wheel.rotation.eulerAngles;
+        // Vector3 currentRot = wheel.rotation.eulerAngles;
         // if (isActive) {
         //     currentRot.z = initialAngle;
         // } else {
         //     currentRot.z = -initialAngle;
         // }
-        wheel.rotation = Quaternion.Euler(currentRot);
+        // wheel.rotation = Quaternion.Euler(currentRot);
     }
 
     IEnumerator Down() {

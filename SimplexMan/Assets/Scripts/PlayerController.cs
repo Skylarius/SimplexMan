@@ -38,14 +38,6 @@ public class PlayerController : Controller {
         currentCameraRotX = Mathf.Clamp(currentCameraRotX, cameraRotationXRange.x, cameraRotationXRange.y);
         myCamera.transform.localEulerAngles = new Vector3(currentCameraRotX, 0f, 0f); 
 
-        // Interaction Input
-        if (interactDown) {
-            PlayerInteraction();
-        }
-        if (interactUp) {
-            StopPlayerInteraction();
-        }
-
         // Cloning Input
         if (recordDown){
             initialPosition = transform.position;
@@ -58,6 +50,15 @@ public class PlayerController : Controller {
             transform.rotation = initialRotation;
         }
     }
+
+    public override void Interact() {
+        PlayerInteraction();
+    }
+
+    public override void StopInteract() {
+        StopPlayerInteraction();
+    }
+    
 
     protected override void GetInputs() {
         horizontal = Input.GetAxisRaw("Horizontal");
