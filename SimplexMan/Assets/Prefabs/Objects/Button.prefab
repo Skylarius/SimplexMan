@@ -161,7 +161,7 @@ MonoBehaviour:
   nClones: 0
   reproductionIndex: 
   nRecordedFrames: 0
-  isActive: 0
+  isActive: 1
   objectToChange: {fileID: 0}
   speed: 0.1
 --- !u!1001 &8092083407044873007

@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 3080834155514582580}
   - component: {fileID: 3080834155514582583}
   - component: {fileID: 3080834155514582584}
+  - component: {fileID: 39112187}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -268,10 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec630c231032cfc4ab6421b5caba7f11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Horizontal: Horizontal
-  Vertical: Vertical
-  mouseX: Mouse X
-  mouseY: Mouse Y
   speed: 15
   rotationSpeed: 5
   jumpForce: 300
@@ -279,7 +276,19 @@ MonoBehaviour:
   stunnedTime: 1
   cameraRotSpeed: 1
   cameraRotationXRange: {x: 10, y: 35}
-  clonePrefab: {fileID: 3799688198043137592, guid: da838bcbd9b39a14abbcfd049f26b5ff,
-    type: 3}
   deathEffect: {fileID: 2799673608838946783, guid: bbc56886e54ffb0428ba3b91fcc4d797,
+    type: 3}
+--- !u!114 &39112187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3080834155514582587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5aea3562e337704786313a0b9b55447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clonePrefab: {fileID: 3799688198043137592, guid: da838bcbd9b39a14abbcfd049f26b5ff,
     type: 3}
