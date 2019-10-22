@@ -49,7 +49,7 @@ MonoBehaviour:
   reproductionIndex: 
   nRecordedFrames: 0
   isActive: 1
-  speed: 100
+  wheelSpeed: 10
   wallSpeed: 1
   wheel: {fileID: 7326934741712071395}
   leftWall: {fileID: 0}
@@ -120,6 +120,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2696993824786161942, guid: 530cf99f5a257f44e862764e8d910f7d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2696993824786161942, guid: 530cf99f5a257f44e862764e8d910f7d,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6074663578210212609, guid: 530cf99f5a257f44e862764e8d910f7d, type: 3}

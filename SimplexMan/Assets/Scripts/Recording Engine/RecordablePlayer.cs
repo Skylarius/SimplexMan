@@ -32,6 +32,12 @@ public class RecordablePlayer : MonoBehaviour {
     }
 
     IEnumerator ERecord() {
+        // Save the first frame separately so that, if the player is already
+        // holding the interaction button, it is recorded.
+        recordings.Add(new RecordedInput());
+        recordings[0].interactDown = Input.GetButton("Interact");
+        yield return null;
+
         while (true) {
             recordings.Add(new RecordedInput());
             yield return null;

@@ -11,7 +11,8 @@ public class FloorTile : MonoBehaviour {
 
     Color defaultColor;
     Transform collidingObject;
-    bool checkPlayer = false;
+
+    int nCollidingObjects = 0;
 
     void Start() {
         defaultColor = GetComponent<Renderer>().material.color;
@@ -20,70 +21,48 @@ public class FloorTile : MonoBehaviour {
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag == "Player") {
             StopCoroutine("Off");
-            StartCoroutine("On");
+            StartCoroutine("On", overColorPlayer);
+            nCollidingObjects++;
         } else if (collision.gameObject.tag == "Clone") {
             StopCoroutine("Off");
-            StartCoroutine("OnClone", collision.collider);
+            StartCoroutine("On", overColorClone);
+            StartCoroutine("OnCollisionExitClone", collision.collider);
+            nCollidingObjects++;
         }
     }
 
     void OnCollisionExit(Collision collision) {
-        if (collision.gameObject.tag == "Player") {
-            StopCoroutine("On");
-            StartCoroutine("Off");
-        } else if (collision.gameObject.tag == "Clone") {
-            StopCoroutine("OnClone");
-            StartCoroutine("Off");
-            checkPlayer = true;
-        }
-    }
-
-    void OnCollisionStay(Collision collision) {
-        if (checkPlayer) {
-            if (collision.gameObject.tag == "Player") {
-                StopCoroutine("Off");
-                StartCoroutine("On");
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Clone") {
+            nCollidingObjects--;
+            if (collision.gameObject.tag == "Clone") {
+                StopCoroutine("OnCollisionExitClone");
             }
-            checkPlayer = false;
+            
+            if (nCollidingObjects == 0) {
+                StopCoroutine("On");
+                StopCoroutine("OnClone");
+                StartCoroutine("Off");
+            } else if (collision.gameObject.tag == "Player") {
+                StartCoroutine("On", overColorClone);
+            } else {
+                StartCoroutine("On", overColorPlayer);
+            }           
         }
     }
 
-    IEnumerator On() {
+    IEnumerator On(Color targetColor) {
         Material material = GetComponent<Renderer>().material;
         Color startColor = material.color;
         float percentage = 0;
 
         while (percentage <= 1) {
 
-            material.color = Color.Lerp(startColor, overColorPlayer, percentage);
+            material.color = Color.Lerp(startColor, targetColor, percentage);
 
             percentage += Time.deltaTime * enterSpeed;
             yield return null;
         }
-        material.color = overColorPlayer;
-    }
-
-    IEnumerator OnClone(Collider clone) {
-        Material material = GetComponent<Renderer>().material;
-        Color startColor = material.color;
-        float percentage = 0;
-
-        while (percentage <= 1) {
-
-            material.color = Color.Lerp(startColor, overColorClone, percentage);
-
-            percentage += Time.deltaTime * enterSpeed;
-            yield return null;
-        }
-        material.color = overColorClone;
-
-        while(true) {
-            if (clone == null || !clone.enabled) {
-                break;
-            }
-            yield return null;
-        }
-        StartCoroutine("Off");
+        material.color = targetColor;
     }
 
     IEnumerator Off() {
@@ -99,5 +78,18 @@ public class FloorTile : MonoBehaviour {
             yield return null;
         }
         material.color = defaultColor;
+    }
+
+    IEnumerator OnCollisionExitClone(Collider clone) {
+        while(true) {
+            if (clone == null || !clone.enabled) {
+                nCollidingObjects--;
+                if (nCollidingObjects == 0) {
+                    StartCoroutine("Off");
+                }
+                break;
+            }
+            yield return null;
+        }
     }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wheel : RecordableWheel {
+public class Wheel : Recordable {
     
-    public float speed;
+    public float wheelSpeed;
     public float wallSpeed;
     public Transform wheel;
     public Transform leftWall;
@@ -14,37 +14,50 @@ public class Wheel : RecordableWheel {
     bool isHolding = false;
     float wallDistance = 14;
 
+    Vector3 wheelRotation;
+    int nCollidingObjects;
+
+    // Recorded initial state
+    float initialWheelRotation;
+    float initialLeftPosition;
+    float initialRightPosition;
+
     public override void Start() {
         base.Start();
+
+        wheelRotation = wheel.localRotation.eulerAngles;
 
         FindObjectOfType<PlayerController>().PlayerInteraction += PlayerInteraction;
         FindObjectOfType<PlayerController>().StopPlayerInteraction += StopPlayerInteraction;
     }
 
-    public override void Update() {
-        base.Update();
-    }
-
     void OnTriggerEnter(Collider collider) {
-        if (collider.tag == "Player") {
+        if (collider.tag == "Player" || collider.tag == "Clone") {
             isEnabled = true;
-        } else if (collider.tag == "Clone") {
-            isEnabled = true;
-            StartCoroutine("CheckClone", collider.gameObject);
+            nCollidingObjects++;
+            if (collider.tag == "Clone") {
+                StartCoroutine("OnTriggerExitClone", collider);
+            }
         }
     }
 
     void OnTriggerExit(Collider collider) {
         if (collider.tag == "Player" || collider.tag == "Clone") {
-            isEnabled = false;
-            StopPlayerInteraction();
+            nCollidingObjects--;
+            if (collider.tag == "Clone") {
+                StopCoroutine("OnTriggerExitClone");
+            }
+
+            if (nCollidingObjects == 0) {
+                isEnabled = false;
+                StopPlayerInteraction();
+            }
         }
     }
 
     void PlayerInteraction() {
         if (isEnabled) {
-            isHolding = !isHolding;
-            //initialState = isActive;
+            isHolding = true;
             StopCoroutine("Up");
             StartCoroutine("Down");
         }
@@ -52,56 +65,62 @@ public class Wheel : RecordableWheel {
 
     void StopPlayerInteraction() {
         if (isHolding) {
-            isHolding = !isHolding;
+            isHolding = false;
             StopCoroutine("Down");
             StartCoroutine("Up");
         }
     }
 
-    protected override void ResetState(bool _isActive) {
-        // Vector3 currentRot = wheel.rotation.eulerAngles;
-        // if (isActive) {
-        //     currentRot.z = initialAngle;
-        // } else {
-        //     currentRot.z = -initialAngle;
-        // }
-        // wheel.rotation = Quaternion.Euler(currentRot);
+    public override void StartRecording() {
+        initialWheelRotation = wheelRotation.x;
+        initialLeftPosition = leftWall.localPosition.z;
+        initialRightPosition = rightWall.localPosition.z;
+        base.StartRecording();
+    }
+
+    public override void StopRecording() {
+        wheelRotation.x = initialWheelRotation;
+        wheel.localRotation = Quaternion.Euler(wheelRotation);
+        leftWall.localPosition = new Vector3(0, 0, initialLeftPosition);
+        rightWall.localPosition = new Vector3(0, 0, initialRightPosition);
+        base.StopRecording();
     }
 
     IEnumerator Down() {
-        Vector3 currentRot = wheel.rotation.eulerAngles;
         while (leftWall.localPosition.z <= wallDistance) {
             leftWall.localPosition += new Vector3(0, 0, Time.deltaTime * wallSpeed);
             rightWall.localPosition -= new Vector3(0, 0, Time.deltaTime * wallSpeed);
-            currentRot.x += Time.deltaTime * speed;
-            wheel.rotation = Quaternion.Euler(currentRot);
+            wheelRotation.x += Time.deltaTime * wheelSpeed;
+            wheel.localRotation = Quaternion.Euler(wheelRotation);
             yield return null;
         }
     }
 
     IEnumerator Up() {
-        Vector3 currentRot = wheel.rotation.eulerAngles;
         while (leftWall.localPosition.z > 0) {
             leftWall.localPosition -= new Vector3(0, 0, Time.deltaTime * wallSpeed * 10);
             rightWall.localPosition += new Vector3(0, 0, Time.deltaTime * wallSpeed * 10);
-            currentRot.x -= Time.deltaTime * speed * 10;
-            wheel.rotation = Quaternion.Euler(currentRot);
+            wheelRotation.x -= Time.deltaTime * wheelSpeed * 10;
+            wheel.localRotation = Quaternion.Euler(wheelRotation);
             yield return null;
         }
         leftWall.localPosition = new Vector3(0, 0, 0);
         rightWall.localPosition = new Vector3(0, 0, 0);
-        currentRot.x = 0;
-        wheel.rotation = Quaternion.Euler(currentRot);
+        wheelRotation.x = 0;
+        wheel.localRotation = Quaternion.Euler(wheelRotation);
     }
 
-    IEnumerator CheckClone(GameObject clone) {
+    IEnumerator OnTriggerExitClone(Collider clone) {
         while(true) {
-            if (clone == null) {
+            if (clone == null || !clone.enabled) {
+                nCollidingObjects--;
+                if (nCollidingObjects == 0) {
+                    isEnabled = false;
+                    StopPlayerInteraction();
+                }
                 break;
             }
             yield return null;
         }
-        // Should check some stuff before doing this
-        StartCoroutine("Up");
     }
 }

@@ -7,12 +7,15 @@ public class RecordableClone : Controller {
     public GameObject deathEffect;
 
     List<RecordablePlayer.RecordedInput> inputs;
-    int index = 0;
+    int frameIndex = 0;
 
-    Vector3 initialPosition;
-    Quaternion initialRotation;
     int goBackToIndex = -1;
     bool isAlive = true;
+
+    // Recorded initial state
+    Vector3 initialPosition;
+    Quaternion initialRotation;
+    
 
     protected override void Start() {
         base.Start();
@@ -22,22 +25,27 @@ public class RecordableClone : Controller {
 
     protected override void Update() {
         base.Update();
-        index++;
+        frameIndex++;
     }
 
     protected override void GetInputs() {
-        if (index < inputs.Count) {
+        if (frameIndex < inputs.Count) {
             if (!isAlive) {
                 isAlive = true;
                 SetVisibility();
             }
-
-            horizontal = inputs[index].horizontal;
-            vertical = inputs[index].vertical;
-            mouseX = inputs[index].mouseX;
-            jump = inputs[index].jump;
-            interactDown = inputs[index].interactDown;
-            interactUp = inputs[index].interactUp;
+            horizontal = inputs[frameIndex].horizontal;
+            vertical = inputs[frameIndex].vertical;
+            mouseX = inputs[frameIndex].mouseX;
+            jump = inputs[frameIndex].jump;
+            interactDown = inputs[frameIndex].interactDown;
+            // Edit the last frame so that, if the clone is interacting, the
+            // interaction ends after its death.
+            if (frameIndex < inputs.Count - 1) {
+                interactUp = inputs[frameIndex].interactUp;
+            } else {
+                interactUp = true;
+            }
         } else {
             if (goBackToIndex != -1) {
                 if (isAlive) {
@@ -78,13 +86,13 @@ public class RecordableClone : Controller {
     void StartRecording() {
         initialPosition = transform.position;
         initialRotation = transform.rotation;
-        goBackToIndex = index;
+        goBackToIndex = frameIndex;
     }
 
     void StopRecording() {
         transform.position = initialPosition;
         transform.rotation = initialRotation;
-        index = goBackToIndex;
+        frameIndex = goBackToIndex;
         goBackToIndex = -1;
     }
 
