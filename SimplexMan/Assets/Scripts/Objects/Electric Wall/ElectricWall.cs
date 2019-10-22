@@ -7,7 +7,7 @@ public class ElectricWall : MonoBehaviour {
     ElectricCollider[] electricColliders;
     ParticleSystem[] electricity;
 
-    void Start() {
+    void Awake() {
         electricColliders = GetComponentsInChildren<ElectricCollider>();
         electricity = GetComponentsInChildren<ParticleSystem>();
     }

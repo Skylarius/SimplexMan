@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wheel : Recordable {
+public class Wheel : InteractiveCollider {
     
     public float wheelSpeed;
     public float wallSpeed;
@@ -10,13 +10,11 @@ public class Wheel : Recordable {
     public Transform leftWall;
     public Transform rightWall;
 
-    bool isEnabled = false;
     bool isHolding = false;
     float wallDistance = 14;
 
     Vector3 wheelRotation;
-    int nCollidingObjects;
-
+    
     // Recorded initial state
     float initialWheelRotation;
     float initialLeftPosition;
@@ -24,50 +22,22 @@ public class Wheel : Recordable {
 
     public override void Start() {
         base.Start();
-
         wheelRotation = wheel.localRotation.eulerAngles;
-
-        FindObjectOfType<PlayerController>().PlayerInteraction += PlayerInteraction;
-        FindObjectOfType<PlayerController>().StopPlayerInteraction += StopPlayerInteraction;
     }
 
-    void OnTriggerEnter(Collider collider) {
-        if (collider.tag == "Player" || collider.tag == "Clone") {
-            isEnabled = true;
-            nCollidingObjects++;
-            if (collider.tag == "Clone") {
-                StartCoroutine("OnTriggerExitClone", collider);
-            }
-        }
-    }
-
-    void OnTriggerExit(Collider collider) {
-        if (collider.tag == "Player" || collider.tag == "Clone") {
-            nCollidingObjects--;
-            if (collider.tag == "Clone") {
-                StopCoroutine("OnTriggerExitClone");
-            }
-
-            if (nCollidingObjects == 0) {
-                isEnabled = false;
-                StopPlayerInteraction();
-            }
-        }
-    }
-
-    void PlayerInteraction() {
-        if (isEnabled) {
+    protected override void PlayerInteraction() {
+        if (base.isEnabled) {
             isHolding = true;
-            StopCoroutine("Up");
-            StartCoroutine("Down");
+            StopCoroutine("Release");
+            StartCoroutine("Hold");
         }
     }
 
-    void StopPlayerInteraction() {
+    protected override void StopPlayerInteraction() {
         if (isHolding) {
             isHolding = false;
-            StopCoroutine("Down");
-            StartCoroutine("Up");
+            StopCoroutine("Hold");
+            StartCoroutine("Release");
         }
     }
 
@@ -86,7 +56,7 @@ public class Wheel : Recordable {
         base.StopRecording();
     }
 
-    IEnumerator Down() {
+    IEnumerator Hold() {
         while (leftWall.localPosition.z <= wallDistance) {
             leftWall.localPosition += new Vector3(0, 0, Time.deltaTime * wallSpeed);
             rightWall.localPosition -= new Vector3(0, 0, Time.deltaTime * wallSpeed);
@@ -96,7 +66,7 @@ public class Wheel : Recordable {
         }
     }
 
-    IEnumerator Up() {
+    IEnumerator Release() {
         while (leftWall.localPosition.z > 0) {
             leftWall.localPosition -= new Vector3(0, 0, Time.deltaTime * wallSpeed * 10);
             rightWall.localPosition += new Vector3(0, 0, Time.deltaTime * wallSpeed * 10);
@@ -108,19 +78,5 @@ public class Wheel : Recordable {
         rightWall.localPosition = new Vector3(0, 0, 0);
         wheelRotation.x = 0;
         wheel.localRotation = Quaternion.Euler(wheelRotation);
-    }
-
-    IEnumerator OnTriggerExitClone(Collider clone) {
-        while(true) {
-            if (clone == null || !clone.enabled) {
-                nCollidingObjects--;
-                if (nCollidingObjects == 0) {
-                    isEnabled = false;
-                    StopPlayerInteraction();
-                }
-                break;
-            }
-            yield return null;
-        }
     }
 }

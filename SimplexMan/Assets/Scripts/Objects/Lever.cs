@@ -2,61 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// True = UP
-// False = DOWN
-public class Lever : RecordableHold {
+public class Lever : InteractiveCollider {
     
-    public ElectricWall objectToChange;
+    public ElectricWall wall;
     public float speed;
     public Transform lever;
 
-    bool isEnabled = false;
+    enum State {Down, Up};
+    State state = State.Up;
+
     bool isHolding = false;
-    bool initialState;
     float initialAngle = -50;
+
+    // Recorded initial state
+    State initialState;
 
     public override void Start() {
         base.Start();
         
-        initialState = base.isActive;
+        SetState(state);
+    }
+
+    void SetState(State s) {
+        state = s;
         Vector3 rot = lever.rotation.eulerAngles;
-        rot.z = initialAngle;
+        if (s == State.Up) {
+            rot.z = initialAngle;
+            wall.ChangeState(true);
+        } else { // Down
+            rot.z = -initialAngle;
+            wall.ChangeState(false);
+        }
         lever.rotation = Quaternion.Euler(rot);
-
-        FindObjectOfType<PlayerController>().PlayerInteraction += PlayerInteraction;
-        FindObjectOfType<PlayerController>().StopPlayerInteraction += StopPlayerInteraction;
     }
 
-    public override void Update() {
-        base.Update();
-    }
-
-    void OnTriggerEnter(Collider collider) {
-        if (collider.tag == "Player") {
-            isEnabled = true;
-        } else if (collider.tag == "Clone") {
-            isEnabled = true;
-            StartCoroutine("CheckClone", collider.gameObject);
-        }
-    }
-
-    void OnTriggerExit(Collider collider) {
-        if (collider.tag == "Player" || collider.tag == "Clone") {
-            isEnabled = false;
-            StopPlayerInteraction();
-        }
-    }
-
-    void PlayerInteraction() {
-        if (isEnabled) {
+    protected override void PlayerInteraction() {
+        if (base.isEnabled) {
             isHolding = !isHolding;
-            initialState = isActive;
             StopCoroutine("Up");
             StartCoroutine("Down");
         }
     }
 
-    void StopPlayerInteraction() {
+    protected override void StopPlayerInteraction() {
         if (isHolding) {
             isHolding = !isHolding;
             StopCoroutine("Down");
@@ -64,15 +52,17 @@ public class Lever : RecordableHold {
         }
     }
 
-    protected override void ResetState(bool _isActive) {
-        Vector3 currentRot = lever.rotation.eulerAngles;
-        if (isActive) {
-            currentRot.z = initialAngle;
-        } else {
-            currentRot.z = -initialAngle;
+    public override void StartRecording() {
+        initialState = state;
+        base.StartRecording();
+    }
+
+    public override void StopRecording() {
+        if (state != initialState) {
+            state = initialState;
+            SetState(state);
         }
-        lever.rotation = Quaternion.Euler(currentRot);
-        objectToChange.ChangeState(isActive);
+        base.StopRecording();
     }
 
     IEnumerator Down() {
@@ -89,17 +79,12 @@ public class Lever : RecordableHold {
             percentage += Time.deltaTime * speed;
             yield return null;
         }
-        currentRot.z = -initialAngle;
-        lever.rotation = Quaternion.Euler(currentRot);
-        isActive = !isActive;
-        objectToChange.ChangeState(isActive);
+        SetState(State.Down);
     }
 
     IEnumerator Up() {
-        if (isActive != initialState) {
-            isActive = !isActive;
-            objectToChange.ChangeState(isActive);
-        }
+        state = State.Up;
+        wall.ChangeState(true);
         Vector3 currentRot = lever.rotation.eulerAngles;
         float startRotZ = currentRot.z;
         if (startRotZ > 180) {
@@ -115,16 +100,5 @@ public class Lever : RecordableHold {
         }
         currentRot.z = initialAngle;
         lever.rotation = Quaternion.Euler(currentRot);
-    }
-
-    IEnumerator CheckClone(GameObject clone) {
-        while(true) {
-            if (clone == null) {
-                break;
-            }
-            yield return null;
-        }
-        // should check some stuff before doing this
-        StartCoroutine("Up");
     }
 }

@@ -44,11 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 815ba2dbfb74b83408fc8da65d755af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
   nClones: 0
   reproductionIndex: 
   nRecordedFrames: 0
-  isActive: 1
   wheelSpeed: 10
   wallSpeed: 1
   wheel: {fileID: 7326934741712071395}
@@ -131,8 +129,7 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6074663578210212609, guid: 530cf99f5a257f44e862764e8d910f7d, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 530cf99f5a257f44e862764e8d910f7d, type: 3}
 --- !u!4 &7326934741712071395 stripped
 Transform:

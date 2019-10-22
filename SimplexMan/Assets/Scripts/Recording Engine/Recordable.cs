@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Recordable : MonoBehaviour {
        
-    public enum State {Idle, Reproducing};
-    public State state = State.Idle;
+    //public enum State {Idle, Reproducing};
+    //public State state = State.Idle;
+    
     public int nClones = 0;
     
     public List<List<RecordedItem>> recordings;
     public List<int> reproductionIndex = new List<int>();
     // keeps track of the number of frames recorded in that current recording (not all of them)
     public int nRecordedFrames = 0;
+
+    bool isReproducing = false;
 
     public virtual void Start() {
         recordings = new List<List<RecordedItem>>();
@@ -20,13 +23,15 @@ public class Recordable : MonoBehaviour {
     }
 
     public virtual void Update() {
-        if (state == State.Reproducing) {
+        //if (state == State.Reproducing) {
+        if (isReproducing) {
             if (reproductionIndex[nClones-1] >= recordings[nClones-1].Count) {
                 recordings.RemoveAt(nClones-1);
                 reproductionIndex.RemoveAt(nClones-1);
                 nClones--;
                 if (nClones == 0) {
-                    state = State.Idle;
+                    //state = State.Idle;
+                    isReproducing = false;
                 }
             } else {
                 Reproduce();
@@ -45,7 +50,8 @@ public class Recordable : MonoBehaviour {
         StopCoroutine("ERecord");
         nClones++;
         reproductionIndex.Add(0);
-        state = State.Reproducing;
+        //state = State.Reproducing;
+        isReproducing = true;
     }
 
     IEnumerator ERecord() {
