@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectricWall : MonoBehaviour {
+public class ElectricWall : MutableObject {
     
     ElectricCollider[] electricColliders;
     ParticleSystem[] electricity;
@@ -12,7 +12,7 @@ public class ElectricWall : MonoBehaviour {
         electricity = GetComponentsInChildren<ParticleSystem>();
     }
 
-    public void ChangeState(bool isActive) {
+    public override void ChangeState(bool isActive) {
         for (int i = 0; i < electricColliders.Length; i++) {
             electricColliders[i].gameObject.SetActive(isActive);
             electricity[i].gameObject.SetActive(isActive);

@@ -43,16 +43,6 @@ public class MapGenerator : MonoBehaviour {
     Queue<Vector2Int> shuffledSectorsCoords;
     System.Random prng;
 
-    Transform player;
-
-    void Awake() {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-
-    void Start() {
-        GenerateMap();
-    }
-
     public void GenerateMap() {
         prng = new System.Random(seed);
         sectorsMap = new Transform[mapSize.x, mapSize.y];

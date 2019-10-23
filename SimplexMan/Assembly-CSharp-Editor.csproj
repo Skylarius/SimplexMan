@@ -44,8 +44,8 @@
     <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
-  <ItemGroup>     <Compile Include="Assets\Editor\ElectricWallEditor.cs" />
-     <Compile Include="Assets\Editor\MapEditor.cs" />
+  <ItemGroup>     <Compile Include="Assets\Editor\MapEditor.cs" />
+     <Compile Include="Assets\Editor\WallGenEditor.cs" />
  <Reference Include="UnityEditor.TestRunner">
  <HintPath>C:/Users/Giacomo Deodato/Documents/GitHub/SimplexMan/SimplexMan/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>

@@ -50,10 +50,6 @@ public static class Utility {
     }
 
     public static Vector3 CoordToHexPosition(Vector2Int coord, float scale) {
-        // Vector2Int absoluteMapSize = mapSize * sectorSize;
-        // return new Vector3(Mathf.Sqrt(3) * (-absoluteMapSize.x/2 + coord.x + (coord.y%2==0?0:0.5f)), 
-        //                    0, 
-        //                    1.5f * (-absoluteMapSize.y/2 + coord.y)) * tileSize;
         return new Vector3(Mathf.Sqrt(3) * (coord.x + (coord.y%2==0?0:0.5f)), 
                            0, 
                            1.5f * (coord.y)) * scale;
@@ -62,17 +58,17 @@ public static class Utility {
     public static Vector2Int HexNext(Vector2Int coords, int direction) {
         switch(direction) {
             case 0:
-                return coords + new Vector2Int(+coords.y%2, +1);
+                return coords + new Vector2Int(Mathf.Abs(coords.y%2), +1);
             case 1:
                 return coords + new Vector2Int(+1, 0);
             case 2:
-                return coords + new Vector2Int(+coords.y%2, -1);
+                return coords + new Vector2Int(Mathf.Abs(coords.y%2), -1);
             case 3:
-                return coords + new Vector2Int(-1+coords.y%2, -1);
+                return coords + new Vector2Int(-1+Mathf.Abs(coords.y%2), -1);
             case 4:
                 return coords + new Vector2Int(-1, 0);
             case 5:
-                return coords + new Vector2Int(-1+coords.y%2, +1);
+                return coords + new Vector2Int(-1+Mathf.Abs(coords.y%2), +1);
             default:
                 return coords;
         }

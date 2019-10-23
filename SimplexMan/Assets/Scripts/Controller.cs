@@ -10,7 +10,6 @@ public class Controller : MonoBehaviour {
     public float jumpForce = 300;
     [Range(0, 1)]
     public float airFriction = 0;
-    public float stunnedTime = 1;
     
     protected Vector3 velocity;
     protected float rotation;
@@ -91,13 +90,13 @@ public class Controller : MonoBehaviour {
         return Physics.Raycast(transform.position, Vector3.down, transform.localScale.y + 0.5f);
     }
 
-    public void Stun() {
+    public void Stun(float stunnedTime) {
         isStunned = true;
         StopCoroutine("RecoverFromStunned");
-        StartCoroutine("RecoverFromStunned");
+        StartCoroutine("RecoverFromStunned", stunnedTime);
     }
 
-    IEnumerator RecoverFromStunned() {
+    IEnumerator RecoverFromStunned(float stunnedTime) {
         float recoveryTime = 0;
         while (recoveryTime <= stunnedTime) {
             recoveryTime += Time.deltaTime;
