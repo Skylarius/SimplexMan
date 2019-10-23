@@ -99,9 +99,7 @@ public class TeleportPlatform : MutableObject {
         teleportEffect.SetActive(true);
         StartCoroutine("SeparateBands");
         StartCoroutine("RotateBands");
-        yield return new WaitForSeconds(teleportTime);
-        StartCoroutine("MergeBands");
-        yield return new WaitForSeconds(recoveryTime);
+        yield return new WaitForSeconds(teleportTime + recoveryTime);
         barrier.GetComponent<TeleportBarrier>().objectsInside.Clear();
         barrier.SetActive(false);
         teleportEffect.SetActive(false);
@@ -109,6 +107,7 @@ public class TeleportPlatform : MutableObject {
     }
 
     IEnumerator SeparateBands() {
+        float timePassed = 0;
         float percentage = 0;
         while (percentage < 1) {
             band1.localPosition = new Vector3(0, Mathf.Lerp(0, 0.5f, percentage), 0);
@@ -117,14 +116,13 @@ public class TeleportPlatform : MutableObject {
             top.localPosition = new Vector3(0, Mathf.Lerp(0, 2, percentage), 0);
 
             percentage += Time.deltaTime * bandSeparationSpeed;
+            timePassed += Time.deltaTime;
             yield return null;
         }
-    }
-
-    IEnumerator MergeBands() {
-        float timePassed = 0;
+        yield return new WaitForSeconds(teleportTime-timePassed);
+        timePassed = 0;
         while (timePassed < recoveryTime) {
-            float percentage = Mathf.InverseLerp(0, recoveryTime, timePassed);
+            percentage = Mathf.InverseLerp(0, recoveryTime, timePassed);
             band1.localPosition = new Vector3(0, Mathf.Lerp(0.5f, 0, percentage), 0);
             band2.localPosition = new Vector3(0, Mathf.Lerp(1, 0, percentage), 0);
             band3.localPosition = new Vector3(0, Mathf.Lerp(1.5f, 0, percentage), 0);
