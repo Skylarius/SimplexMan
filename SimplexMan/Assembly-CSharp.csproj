@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\Objects\Controllers\Wheel.cs" />
      <Compile Include="Assets\Scripts\Objects\Electric Wall\ElectricCollider.cs" />
      <Compile Include="Assets\Scripts\Objects\Electric Wall\ElectricWall.cs" />
+     <Compile Include="Assets\Scripts\Objects\Teleport platform\TeleportBarrier.cs" />
      <Compile Include="Assets\Scripts\Objects\Teleport platform\TeleportPlatform.cs" />
      <Compile Include="Assets\Scripts\Objects\Utility\WallGenerator.cs" />
      <Compile Include="Assets\Scripts\Objects\WaveGenerator.cs" />

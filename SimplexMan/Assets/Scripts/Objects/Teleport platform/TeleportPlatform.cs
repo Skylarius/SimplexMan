@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TeleportPlatform : MutableObject {
     
-    public GameObject barrier;
     public Transform arrivalStation;
+    public GameObject barrier;
+    public GameObject teleportEffect;
     public Transform band1;
     public Transform band2;
     public Transform band3;
@@ -39,7 +40,6 @@ public class TeleportPlatform : MutableObject {
         }
 
         if (!isTeleporting) {
-            print("notTeleporting");
             if (activatedControllers == 1) {
                 StartCoroutine("TeleportAnimation");
                 StartCoroutine("TeleportObjects");
@@ -66,7 +66,7 @@ public class TeleportPlatform : MutableObject {
     IEnumerator TeleportObjects() {
         foreach (GameObject objectToTeleport in objectsToTeleport) {
             if (objectToTeleport != null) {
-                objectToTeleport.GetComponent<Controller>().Stun(teleportTime);
+                objectToTeleport.GetComponent<Controller>().Stun(10);
             }
         }
         float passedTime = 0;
@@ -84,17 +84,27 @@ public class TeleportPlatform : MutableObject {
                 objectToTeleport.transform.position = arrivalStation.position;
             }
         }
+        foreach (GameObject objectToTeleport in objectsToTeleport) {
+            if (objectToTeleport != null) {
+                objectToTeleport.GetComponent<Controller>().Stun(0);
+            }
+        }
+        objectsToTeleport.Clear();
     }
 
     IEnumerator TeleportAnimation() {
         isTeleporting = true;
         barrier.SetActive(true);
+        barrier.GetComponent<TeleportBarrier>().objectsInside = objectsToTeleport;
+        teleportEffect.SetActive(true);
         StartCoroutine("SeparateBands");
         StartCoroutine("RotateBands");
         yield return new WaitForSeconds(teleportTime);
         StartCoroutine("MergeBands");
-        yield return new WaitForSeconds(recoveryTime + 0.5f);
+        yield return new WaitForSeconds(recoveryTime);
+        barrier.GetComponent<TeleportBarrier>().objectsInside.Clear();
         barrier.SetActive(false);
+        teleportEffect.SetActive(false);
         isTeleporting = false;
     }
 

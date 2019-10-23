@@ -1,7 +1,6 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - Button
     - ElectricCollider
     - ElectricWall
     - FloorTile
@@ -11,6 +10,10 @@ ScriptsOnlyBuild:
     - PostProcessingSwitch
     - RecordableClone
     - RecordablePlayer
+    - Switch
+    - TeleportBarrier
+    - TeleportPlatform
+    - WallGenerator
     - Wheel
     Unity.Postprocessing.Runtime.dll:
     - UnityEngine.Rendering.PostProcessing.AmbientOcclusion
@@ -30,6 +33,7 @@ ScriptsOnlyBuild:
     - UnityEngine.Rendering.PostProcessing.Vignette
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
+    - UnityEditor.TestTools.TestRunner.TestListCacheData
   sceneClasses:
     Assets/Scenes/New Scene.unity:
     - Class: 1
@@ -58,13 +62,7 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 72
       Script: {instanceID: 0}
-    - Class: 74
-      Script: {instanceID: 0}
     - Class: 81
-      Script: {instanceID: 0}
-    - Class: 91
-      Script: {instanceID: 0}
-    - Class: 95
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
@@ -83,39 +81,45 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9846}
     - Class: 114
+      Script: {instanceID: 10052}
+    - Class: 114
       Script: {instanceID: 10076}
     - Class: 114
       Script: {instanceID: 10104}
     - Class: 114
       Script: {instanceID: 10144}
     - Class: 114
-      Script: {instanceID: 10466}
+      Script: {instanceID: 10468}
     - Class: 114
-      Script: {instanceID: 10472}
+      Script: {instanceID: 10474}
     - Class: 114
       Script: {instanceID: 10518}
     - Class: 114
-      Script: {instanceID: 10610}
+      Script: {instanceID: 10552}
     - Class: 114
-      Script: {instanceID: 10640}
+      Script: {instanceID: 10638}
     - Class: 114
-      Script: {instanceID: 10672}
+      Script: {instanceID: 10670}
     - Class: 114
-      Script: {instanceID: 10810}
+      Script: {instanceID: 10808}
     - Class: 114
-      Script: {instanceID: 11004}
+      Script: {instanceID: 11002}
     - Class: 114
-      Script: {instanceID: 11170}
+      Script: {instanceID: 11168}
     - Class: 114
-      Script: {instanceID: 11452}
+      Script: {instanceID: 11450}
     - Class: 114
-      Script: {instanceID: 11504}
+      Script: {instanceID: 11502}
     - Class: 114
-      Script: {instanceID: 11546}
+      Script: {instanceID: 11544}
+    - Class: 114
+      Script: {instanceID: 11598}
     - Class: 114
       Script: {instanceID: 11662}
     - Class: 114
       Script: {instanceID: 11682}
+    - Class: 114
+      Script: {instanceID: 859546}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 136
@@ -255,12 +259,6 @@ ScriptsOnlyBuild:
     className: TMP_InputField
   - hash:
       serializedVersion: 2
-      Hash: 1710df009d13af7eb82665b973226424
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: RecordableTransform
-  - hash:
-      serializedVersion: 2
       Hash: 7ab0e790220bdca831fdd886b339039d
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -271,6 +269,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Postprocessing.Runtime.dll
     namespaceName: UnityEngine.Rendering.PostProcessing
     className: ScreenSpaceReflections
+  - hash:
+      serializedVersion: 2
+      Hash: 61bfa6ebcd1c04bc3fd843248e54d1d0
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TeleportPlatform
   - hash:
       serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
@@ -309,7 +313,7 @@ ScriptsOnlyBuild:
     className: Vignette
   - hash:
       serializedVersion: 2
-      Hash: 4edd99110308f8db1a3ce66dd2ddd9b6
+      Hash: 20574e1b445660d05de4d64953743057
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -339,6 +343,12 @@ ScriptsOnlyBuild:
     className: TMP_SubMeshUI
   - hash:
       serializedVersion: 2
+      Hash: 6452c65f1e858150715f7c285df5a435
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InteractiveCollider
+  - hash:
+      serializedVersion: 2
       Hash: 5ab533713adae59372fb3e10a585c186
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -349,12 +359,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Mask
-  - hash:
-      serializedVersion: 2
-      Hash: 3fef1570296bdc51b53df1438c35c9b8
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: RecordablePress
   - hash:
       serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
@@ -379,6 +383,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: ControlPlayableAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MutableObject
   - hash:
       serializedVersion: 2
       Hash: b8a5e8091ab0b8861d2add371082c5e0
@@ -411,12 +421,6 @@ ScriptsOnlyBuild:
     className: ChromaticAberration
   - hash:
       serializedVersion: 2
-      Hash: 3fef1570296bdc51b53df1438c35c9b8
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: RecordableHold
-  - hash:
-      serializedVersion: 2
       Hash: 57bcec6b384757f1533849f789c44c37
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -429,16 +433,16 @@ ScriptsOnlyBuild:
     className: TMP_Asset
   - hash:
       serializedVersion: 2
-      Hash: 1710df009d13af7eb82665b973226424
+      Hash: 6452c65f1e858150715f7c285df5a435
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Recordable
   - hash:
       serializedVersion: 2
-      Hash: faef57a86027547e75bd07a243e1697e
+      Hash: bf2475b4c67d23fd8b7092b7c784e6c4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: ElectricWallGenerator
+    className: WallGenerator
   - hash:
       serializedVersion: 2
       Hash: d4020bafcd3ccbb5601a6e6c8ac78be0
@@ -451,12 +455,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 9c14c4fb2467df039605cc07f4215d7a
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Button
   - hash:
       serializedVersion: 2
       Hash: d6fc8d3165070298511ec776ea575626
@@ -561,7 +559,7 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 81505356ce8b756e7ac4638a8d8f38d0
+      Hash: 6f01cef111a50ab8047e0fd922c5e1ed
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RecordableClone
@@ -573,7 +571,7 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: cb71505c3ff55a6fced8ac1e6f86ae4a
+      Hash: 53f20bc000c0f2fa67fb066901f1ef98
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Wheel
@@ -585,7 +583,7 @@ ScriptsOnlyBuild:
     className: TextMeshProUGUI
   - hash:
       serializedVersion: 2
-      Hash: 85d9446a3173f7df8a21fc108c7c192e
+      Hash: d85f59bb54859b51d6964259e9397102
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Controller
@@ -627,7 +625,7 @@ ScriptsOnlyBuild:
     className: MapGenerator_
   - hash:
       serializedVersion: 2
-      Hash: 38036416f42107b97d0b0a239639d880
+      Hash: fd6eee69e3b36b325cf876624015c1e1
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ElectricCollider
@@ -693,6 +691,12 @@ ScriptsOnlyBuild:
     className: TMP_SubMesh
   - hash:
       serializedVersion: 2
+      Hash: 5ad148fea903deff75a120c26ad98e22
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Switch
+  - hash:
+      serializedVersion: 2
       Hash: 20eeaeae829475b5e354d1f626c51a2b
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner
@@ -741,7 +745,7 @@ ScriptsOnlyBuild:
     className: ToggleGroup
   - hash:
       serializedVersion: 2
-      Hash: dcf960688408bf57501263aeb42e750e
+      Hash: 85e8b7ae5192684d2d90259f63b6c6a7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Lever
@@ -751,6 +755,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 318adba91b5f00ec89e436332f7fd8d5
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TeleportBarrier
   platform: 5
   scenePathNames:
   - Assets/Scenes/New Scene.unity

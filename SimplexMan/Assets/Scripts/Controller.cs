@@ -103,6 +103,7 @@ public class Controller : MonoBehaviour {
             yield return null;
         }
         isStunned = false;
+        print("recovered");
     }
 
     protected virtual void GetInputs() {}
