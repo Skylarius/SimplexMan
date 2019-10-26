@@ -27,6 +27,7 @@ public class TeleportPlatform : MutableObject {
     // Internal
     bool isIdle = true;
     bool isRecovering = false;
+    PlayerController player;
 
     // Recorded initial state
     Vector3 initialBand1Position;
@@ -44,6 +45,7 @@ public class TeleportPlatform : MutableObject {
     bool initialIsRecovering;
 
     public override void Start() {
+        player = FindObjectOfType<PlayerController>();
         base.Start();
     }
 
@@ -125,6 +127,8 @@ public class TeleportPlatform : MutableObject {
     }
 
     IEnumerator SeparateBands() {
+        player.DisableRecording();
+
         foreach (GameObject objectToTeleport in objectsToTeleport) {
             if (objectToTeleport != null) {
                 objectToTeleport.GetComponent<Controller>().Stun(10);
@@ -255,5 +259,7 @@ public class TeleportPlatform : MutableObject {
 
         isIdle = true;
         isRecovering = false;
+
+        player.EnableRecording();
     }
 }

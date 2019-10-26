@@ -14,7 +14,8 @@ public class PlayerController : Controller {
     public event System.Action StopRecording;
 
     bool recordDown;
-    bool recordUp;
+    bool isRecordEnabled = true;
+    bool isRecording = false;
     
     float currentCameraRotX = 0f;
     Camera myCamera;
@@ -40,14 +41,18 @@ public class PlayerController : Controller {
 
         // Cloning Input
         if (recordDown){
-            initialPosition = transform.position;
-            initialRotation = transform.rotation;
-            StartRecording();         
-        }
-        if (recordUp){
-            StopRecording();
-            transform.position = initialPosition;
-            transform.rotation = initialRotation;
+            if (!isRecording && isRecordEnabled) {
+                isRecording = true;
+                initialPosition = transform.position;
+                initialRotation = transform.rotation;
+                StartRecording();
+            } else if (isRecording) {
+                isRecording = false;
+                StopRecording();
+                transform.position = initialPosition;
+                transform.rotation = initialRotation;
+            }
+            
         }
     }
 
@@ -57,6 +62,14 @@ public class PlayerController : Controller {
 
     public override void StopInteract() {
         StopPlayerInteraction();
+    }
+
+    public void EnableRecording() {
+        isRecordEnabled = true;
+    }
+
+    public void DisableRecording() {
+        isRecordEnabled = false;
     }
     
 
@@ -69,81 +82,5 @@ public class PlayerController : Controller {
         interactUp = Input.GetButtonUp("Interact");
 
         recordDown = Input.GetButtonDown("Record");
-        recordUp = Input.GetButtonUp("Record");
     }
 }
-
-    // IEnumerator Record(Recordings recordings) {
-    //     while (true) {
-    //         recordings.position.Add(transform.position);
-    //         recordings.rotation.Add(transform.rotation);
-    //         recordings.scale.Add(transform.localScale);
-    //         recordings.velocity.Add(rb.velocity);
-    //         // if (isDownInteract) {
-    //         //     recordings.isInteracting.Add(true);
-    //         // } else {
-    //         //     recordings.isInteracting.Add(false);
-    //         // }
-    //         yield return null;
-    //     }
-        
-    // }
-
-    // IEnumerator SymplexMan(Recordings recordings) {
-    //     // recordings.isInteracting = recordings.CleanList(recordings.isInteracting);
-        
-    //     // transform.position = recordings.position[0];
-    //     // transform.rotation = recordings.rotation[0];
-    //     // transform.localScale = recordings.scale[0];
-    //     // rb.velocity = recordings.velocity[0];
-    //     // if (recordings.isInteracting[0]) {
-    //     //     PlayerInteraction();
-    //     // }
-
-    //     // GameObject clone = Instantiate(clonePrefab, 
-    //     //                                recordings.position[0], 
-    //     //                                recordings.rotation[0]);
-
-    //     // Rigidbody cloneRB = clone.GetComponent<Rigidbody>();
-    //     // Transform cloneT = clone.GetComponent<Transform>();
-
-    //     // for (int i = 0; i < recordings.velocity.Count; i++) {
-    //     //     cloneT.position = recordings.position[i];
-    //     //     cloneT.rotation = recordings.rotation[i];
-    //     //     cloneT.localScale = recordings.scale[i];
-    //     //     cloneRB.velocity = recordings.velocity[i];
-    //     //     if (recordings.isInteracting[i]) {
-    //     //         PlayerInteraction();
-    //     //     }
-    //     //     yield return null;
-    //     // }
-    //     // Vector3 deathPosition = cloneT.position;
-    //     // Destroy(clone);
-    //     // Destroy(Instantiate(deathEffect, deathPosition, Quaternion.identity), 2);
-    //     yield return null;
-    // }
-
-    
-
-    // class Recordings {
-    //     public List<Vector3> position = new List<Vector3>();
-    //     public List<Quaternion> rotation = new List<Quaternion>();
-    //     public List<Vector3> scale = new List<Vector3>();
-    //     public List<Vector3> velocity = new List<Vector3>();
-    //     public List<bool> isInteracting = new List<bool>();
-
-    //     public List<bool> CleanList(List<bool> dirtyList) {
-    //         List<bool> list = dirtyList;
-    //         bool isCleaning = false;
-    //         for (int i = 0; i < list.Count; i++) {
-    //             if (list[i] == false) {
-    //                 isCleaning = false;
-    //             } else if (list[i] == true && !isCleaning) {
-    //                 isCleaning = true;
-    //             } else {
-    //                 list[i] = false;
-    //             }
-    //         }
-    //         return list;
-    //     }
-    // }
