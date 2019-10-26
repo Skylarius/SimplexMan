@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5524424570668325318}
   - component: {fileID: 4106234809412932260}
   m_Layer: 0
-  m_Name: Point Light (2)
+  m_Name: Collision effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.97989583, g: 0.9811321, b: 0.8006408, a: 1}
   m_Intensity: 4
-  m_Range: 2
+  m_Range: 4
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10

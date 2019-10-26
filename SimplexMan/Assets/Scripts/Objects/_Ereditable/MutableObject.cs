@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MutableObject : MonoBehaviour {
+public class MutableObject : Recordable {
     public virtual void ChangeState(bool state) {}
 }

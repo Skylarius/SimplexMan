@@ -186,8 +186,8 @@ MonoBehaviour:
   nClones: 0
   reproductionIndex: 
   nRecordedFrames: 0
-  wall: {fileID: 0}
-  speed: 1
+  mutableObject: {fileID: 0}
+  speed: 100
   lever: {fileID: 7675619879014005819}
 --- !u!1 &1366168324078398198
 GameObject:

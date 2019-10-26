@@ -665,7 +665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionEffect: {fileID: 2981756635956570748, guid: c0a0980f121616f42a91934cb28149de,
     type: 3}
-  objectsInside: []
+  objectsToTeleport: []
 --- !u!1 &1705108770273438359
 GameObject:
   m_ObjectHideFlags: 0
@@ -9927,6 +9927,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81b4e820e5251e43ad9920cdcffd3c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nClones: 0
+  reproductionIndex: 
+  nRecordedFrames: 0
   arrivalStation: {fileID: 0}
   barrier: {fileID: 1367906025997799327}
   teleportEffect: {fileID: 7781108871747832712}
@@ -9934,10 +9937,6 @@ MonoBehaviour:
   band2: {fileID: 4481865748251434019}
   band3: {fileID: 1931919374387682577}
   top: {fileID: 7889337145801227904}
-  teleportTime: 4
-  recoveryTime: 2
-  bandSeparationSpeed: 0.5
-  bandsAcceleration: 1.2
 --- !u!1 &8266878221314214853
 GameObject:
   m_ObjectHideFlags: 0

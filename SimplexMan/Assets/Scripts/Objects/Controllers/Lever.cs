@@ -5,16 +5,17 @@ using UnityEngine;
 public class Lever : InteractiveCollider {
     
     public MutableObject mutableObject;
-    public float speed;
+    public float speed = 100;
     public Transform lever;
 
     enum State {Down, Up};
     State state = State.Up;
 
     bool isHolding = false;
-    float initialAngle = -50;
+    float upRotation = -50;
 
     // Recorded initial state
+    Quaternion initialRotation;
     State initialState;
 
     public override void Start() {
@@ -27,10 +28,10 @@ public class Lever : InteractiveCollider {
         state = s;
         Vector3 rot = lever.localRotation.eulerAngles;
         if (s == State.Up) {
-            rot.z = initialAngle;
+            rot.z = upRotation;
             mutableObject.ChangeState(true);
         } else { // Down
-            rot.z = -initialAngle;
+            rot.z = -upRotation;
             mutableObject.ChangeState(false);
         }
         lever.localRotation = Quaternion.Euler(rot);
@@ -38,7 +39,7 @@ public class Lever : InteractiveCollider {
 
     protected override void PlayerInteraction() {
         if (base.isEnabled) {
-            isHolding = !isHolding;
+            isHolding = true;
             StopCoroutine("Up");
             StartCoroutine("Down");
         }
@@ -46,7 +47,7 @@ public class Lever : InteractiveCollider {
 
     protected override void StopPlayerInteraction() {
         if (isHolding) {
-            isHolding = !isHolding;
+            isHolding = false;
             StopCoroutine("Down");
             StartCoroutine("Up");
         }
@@ -54,29 +55,28 @@ public class Lever : InteractiveCollider {
 
     public override void StartRecording() {
         initialState = state;
+        initialRotation = lever.localRotation;
         base.StartRecording();
     }
 
     public override void StopRecording() {
         if (state != initialState) {
             state = initialState;
-            SetState(state);
+            mutableObject.ChangeState(true);
         }
+        lever.localRotation = initialRotation;
         base.StopRecording();
     }
 
     IEnumerator Down() {
         Vector3 currentRot = lever.localRotation.eulerAngles;
-        float startRotZ = currentRot.z;
-        if (startRotZ > 180) {
-            startRotZ -= 360;
+        if (currentRot.z > 180) {
+            currentRot.z -= 360;
         }
-        float percentage = 0;
-        while (percentage <= 1) {
-            currentRot.z = Mathf.Lerp(startRotZ, -initialAngle, percentage);
+        while (currentRot.z < -upRotation) {
+            currentRot.z += Time.deltaTime * speed;
             lever.localRotation = Quaternion.Euler(currentRot);
 
-            percentage += Time.deltaTime * speed;
             yield return null;
         }
         SetState(State.Down);
@@ -86,19 +86,16 @@ public class Lever : InteractiveCollider {
         state = State.Up;
         mutableObject.ChangeState(true);
         Vector3 currentRot = lever.localRotation.eulerAngles;
-        float startRotZ = currentRot.z;
-        if (startRotZ > 180) {
-            startRotZ -= 360;
+        if (currentRot.z > 180) {
+            currentRot.z -= 360;
         }
-        float percentage = 0;
-        while (percentage <= 1) {
-            currentRot.z = Mathf.Lerp(startRotZ, initialAngle, percentage);
+        while (currentRot.z > upRotation) {
+            currentRot.z -= Time.deltaTime * speed;
             lever.localRotation = Quaternion.Euler(currentRot);
 
-            percentage += Time.deltaTime * speed;
             yield return null;
         }
-        currentRot.z = initialAngle;
+        currentRot.z = upRotation;
         lever.localRotation = Quaternion.Euler(currentRot);
     }
 }

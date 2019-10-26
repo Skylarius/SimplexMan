@@ -7,11 +7,11 @@ public class TeleportBarrier : MonoBehaviour {
     float repulsiveForce = 30;
     public GameObject collisionEffect;
     float stunnedTime = 1;
-    public List<GameObject> objectsInside;
+    public List<GameObject> objectsToTeleport;
     
     void OnTriggerEnter(Collider collider) {
         if (collider.tag == "Player" || collider.tag == "Clone") {
-            if (!objectsInside.Contains(collider.gameObject)) {
+            if (!objectsToTeleport.Contains(collider.gameObject)) {
                 Repulse(collider);
             }
         }
@@ -19,7 +19,7 @@ public class TeleportBarrier : MonoBehaviour {
 
     void OnTriggerStay(Collider collider) {
         if (collider.tag == "Player" || collider.tag == "Clone") {
-            if (!objectsInside.Contains(collider.gameObject)) {
+            if (!objectsToTeleport.Contains(collider.gameObject)) {
                 Repulse(collider);
             }
         }
