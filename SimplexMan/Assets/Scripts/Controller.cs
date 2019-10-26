@@ -10,6 +10,7 @@ public class Controller : MonoBehaviour {
     public float jumpForce = 300;
     [Range(0, 1)]
     public float airFriction = 0;
+    public LayerMask jumpable;
     
     protected Vector3 velocity;
     protected float rotation;
@@ -87,7 +88,7 @@ public class Controller : MonoBehaviour {
     }
 
     bool IsGrounded() {
-        return Physics.Raycast(transform.position, Vector3.down, transform.localScale.y + 0.5f);
+        return Physics.Raycast(transform.position, Vector3.down, transform.localScale.y + 0.5f, jumpable);
     }
 
     public void Stun(float stunnedTime) {
@@ -103,7 +104,6 @@ public class Controller : MonoBehaviour {
             yield return null;
         }
         isStunned = false;
-        print("recovered");
     }
 
     protected virtual void GetInputs() {}

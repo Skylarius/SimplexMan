@@ -11,7 +11,6 @@ public class TeleportPlatform : MutableObject {
     public Transform band2;
     public Transform band3;
     public Transform top;
-    
 
     // Animation
     float bandSeparationSpeed = 0.5f;
@@ -70,7 +69,6 @@ public class TeleportPlatform : MutableObject {
         barrier.SetActive(true);
         barrier.GetComponent<TeleportBarrier>().objectsToTeleport = objectsToTeleport;
         
-        StopCoroutine("MergeBands");
         StartCoroutine("SeparateBands");
     }
 
@@ -193,17 +191,12 @@ public class TeleportPlatform : MutableObject {
                 objectToTeleport.transform.position = arrivalStation.position;
             }
         }
-        foreach (GameObject objectToTeleport in objectsToTeleport) {
-            if (objectToTeleport != null) {
-                objectToTeleport.GetComponent<Controller>().Stun(0);
-            }
-        }
-        objectsToTeleport.Clear();
 
         StartCoroutine("MergeBands");
     }
 
     IEnumerator MergeBands() {
+
         bandsSpeed = 10;
         isRecovering = true;
 
@@ -253,8 +246,16 @@ public class TeleportPlatform : MutableObject {
         band3.localPosition = new Vector3(0, 0, 0);
         top.localPosition = new Vector3(0, 0, 0);
 
-        barrier.GetComponent<TeleportBarrier>().objectsToTeleport.Clear();
         barrier.SetActive(false);
+        foreach (GameObject objectToTeleport in objectsToTeleport) {
+            if (objectToTeleport != null) {
+                print("something");
+                objectToTeleport.GetComponent<Controller>().Stun(0);
+            }
+        }
+        barrier.GetComponent<TeleportBarrier>().objectsToTeleport.Clear();
+        objectsToTeleport.Clear();
+
         teleportEffect.SetActive(false);
 
         isIdle = true;

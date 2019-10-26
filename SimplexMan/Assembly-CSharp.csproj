@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\Objects\Teleport platform\TeleportBarrier.cs" />
      <Compile Include="Assets\Scripts\Objects\Teleport platform\TeleportPlatform.cs" />
      <Compile Include="Assets\Scripts\Objects\Utility\WallGenerator.cs" />
+     <Compile Include="Assets\Scripts\Objects\Vent\Vent.cs" />
      <Compile Include="Assets\Scripts\Objects\WaveGenerator.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PostProcessingSwitch.cs" />

@@ -69,6 +69,8 @@ public class MapGenerator : MonoBehaviour {
         obstaclesHolder.parent = mapHolder;
         Transform borderHolder = new GameObject("Border").transform;
         borderHolder.parent = mapHolder;
+        Transform roofHolder = new GameObject("Roof").transform;
+        roofHolder.parent = mapHolder;
 
         // Generate wall sectors
         bool[,] wallSectorsMap = new bool[mapSize.x, mapSize.y];
@@ -112,6 +114,31 @@ public class MapGenerator : MonoBehaviour {
         GenerateFreeMap(freeTilesCoords, floorHolder, obstaclesHolder);
 
         GenerateBorder(borderHolder);
+
+        //GenerateRoof(roofHolder);
+    }
+
+    void GenerateRoof(Transform holder) {
+        Vector2Int absoluteMapSize = mapSize * sectorSize;
+        for (int x = 0; x < absoluteMapSize.x; x++) {
+            for (int y = 0; y < absoluteMapSize.y; y++) {
+                Vector3 roofTilePosition = Utility.CoordToHexPosition(new Vector2Int(x, y), tileSize);
+                roofTilePosition += Vector3.up * wallsHeightRange.x;
+                Transform roofTile = Instantiate(obstaclePrefab, 
+                                                roofTilePosition,// + Vector3.up * obstacleHeight / 2, 
+                                                Quaternion.identity) as Transform;
+                roofTile.parent = holder;
+                roofTile.localScale = new Vector3(tileSize, 
+                                                 0.1f, 
+                                                 tileSize);
+                Renderer obstacleRenderer = roofTile.GetComponentInChildren<Renderer>();
+                Material obstacleMaterial = new Material(obstacleRenderer.sharedMaterial);
+                float colorPercent = RandomRange(0f, 1);//randomCoord.y / (float) currentMap.sectorSize.y;
+                obstacleMaterial.color = Color.Lerp(obstacleColor1, obstacleColor2, colorPercent);
+                obstacleRenderer.sharedMaterial = obstacleMaterial;
+            }
+        }
+
     }
 
     void GenerateBorder(Transform holder) {

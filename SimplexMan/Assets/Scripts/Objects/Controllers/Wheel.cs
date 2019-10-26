@@ -43,23 +43,23 @@ public class Wheel : InteractiveCollider {
 
     public override void StartRecording() {
         initialWheelRotation = wheelRotation.x;
-        initialLeftPosition = leftWall.localPosition.z;
-        initialRightPosition = rightWall.localPosition.z;
+        initialLeftPosition = leftWall.localPosition.x;
+        initialRightPosition = rightWall.localPosition.x;
         base.StartRecording();
     }
 
     public override void StopRecording() {
         wheelRotation.x = initialWheelRotation;
         wheel.localRotation = Quaternion.Euler(wheelRotation);
-        leftWall.localPosition = new Vector3(0, 0, initialLeftPosition);
-        rightWall.localPosition = new Vector3(0, 0, initialRightPosition);
+        leftWall.localPosition = new Vector3(initialLeftPosition, 0, 0);
+        rightWall.localPosition = new Vector3(initialRightPosition, 0, 0);
         base.StopRecording();
     }
 
     IEnumerator Hold() {
-        while (leftWall.localPosition.z <= wallDistance) {
-            leftWall.localPosition += new Vector3(0, 0, Time.deltaTime * wallSpeed);
-            rightWall.localPosition -= new Vector3(0, 0, Time.deltaTime * wallSpeed);
+        while (rightWall.localPosition.x <= wallDistance) {
+            leftWall.localPosition -= new Vector3(Time.deltaTime * wallSpeed, 0, 0);
+            rightWall.localPosition += new Vector3(Time.deltaTime * wallSpeed, 0, 0);
             wheelRotation.x += Time.deltaTime * wheelSpeed;
             wheel.localRotation = Quaternion.Euler(wheelRotation);
             yield return null;
@@ -67,9 +67,9 @@ public class Wheel : InteractiveCollider {
     }
 
     IEnumerator Release() {
-        while (leftWall.localPosition.z > 0) {
-            leftWall.localPosition -= new Vector3(0, 0, Time.deltaTime * wallSpeed * 10);
-            rightWall.localPosition += new Vector3(0, 0, Time.deltaTime * wallSpeed * 10);
+        while (rightWall.localPosition.x > 0) {
+            leftWall.localPosition += new Vector3(Time.deltaTime * wallSpeed * 10, 0, 0);
+            rightWall.localPosition -= new Vector3(Time.deltaTime * wallSpeed * 10, 0, 0);
             wheelRotation.x -= Time.deltaTime * wheelSpeed * 10;
             wheel.localRotation = Quaternion.Euler(wheelRotation);
             yield return null;

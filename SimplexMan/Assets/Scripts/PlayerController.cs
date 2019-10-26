@@ -6,7 +6,7 @@ public class PlayerController : Controller {
 
     [Header("Camera")]
     public float cameraRotSpeed = 1;
-    public Vector2 cameraRotationXRange = new Vector2(25, 35);
+    public Vector2 cameraRotationXRange = new Vector2(0, 15);
 
     public event System.Action PlayerInteraction;
     public event System.Action StopPlayerInteraction;
