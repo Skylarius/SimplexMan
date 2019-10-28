@@ -24,6 +24,8 @@ public class MapGenerator : MonoBehaviour {
     public float maxObstacleHeight;
     public Color obstacleColor1;
     public Color obstacleColor2;
+    public float monitorOffProbability;
+    public float monitorOnProbability;
 
     [Header("Border and walls")]
     [Range(0, 1)]
@@ -37,6 +39,8 @@ public class MapGenerator : MonoBehaviour {
     public Transform tilePrefab;
     public Transform obstaclePrefab;
     public Material underFloorMat;
+    public GameObject monitorOn;
+    public GameObject monitorOff;
 
     Transform[,] sectorsMap;
     List<Vector2Int> sectorsCoords;
@@ -71,6 +75,8 @@ public class MapGenerator : MonoBehaviour {
         borderHolder.parent = mapHolder;
         Transform roofHolder = new GameObject("Roof").transform;
         roofHolder.parent = mapHolder;
+        Transform floraHolder = new GameObject("Flora").transform;
+        floraHolder.parent = mapHolder;
 
         // Generate wall sectors
         bool[,] wallSectorsMap = new bool[mapSize.x, mapSize.y];
@@ -111,7 +117,7 @@ public class MapGenerator : MonoBehaviour {
                 }
             }
         }
-        GenerateFreeMap(freeTilesCoords, floorHolder, obstaclesHolder);
+        GenerateFreeMap(freeTilesCoords, floorHolder, obstaclesHolder, floraHolder);
 
         GenerateBorder(borderHolder);
 
@@ -205,7 +211,7 @@ public class MapGenerator : MonoBehaviour {
         return (float)prng.Next((int) min * 100, (int) max * 100) / 100;
     }
 
-    public void GenerateFreeMap(List<Vector2Int> freeTilesCoords, Transform floorHolder, Transform obstaclesHolder) {
+    public void GenerateFreeMap(List<Vector2Int> freeTilesCoords, Transform floorHolder, Transform obstaclesHolder, Transform floraHolder) {
 
         // List<Vector2Int> allTileCoords;
         Queue<Vector2Int> shuffledTileCoords;
@@ -221,7 +227,7 @@ public class MapGenerator : MonoBehaviour {
         bool[,] obstacleMap = new bool[sectorSize * mapSize.x, sectorSize * mapSize.y];
         for (int x = 0; x < sectorSize * mapSize.x; x++) {
             for (int y = 0; y < sectorSize * mapSize.y; y++) {
-                obstacleMap[x, y] = true;
+                obstacleMap[x, y] = true;                
             }
         }
 
@@ -255,6 +261,24 @@ public class MapGenerator : MonoBehaviour {
                 float colorPercent = RandomRange(0, 1);//randomCoord.y / (float) currentMap.sectorSize.y;
                 obstacleMaterial.color = Color.Lerp(obstacleColor1, obstacleColor2, colorPercent);
                 obstacleRenderer.sharedMaterial = obstacleMaterial;
+
+                float incentive = 0;
+                for (int a = 0; a < 3; a++) {
+                    float p = RandomRange(0, 1) - incentive;
+                    if (p < monitorOnProbability) {
+                        Transform newFlora = Instantiate(monitorOn, 
+                                                        obstaclePosition + Vector3.up * obstacleHeight, 
+                                                        Quaternion.Euler(new Vector3(0, 120*a, 0))).transform;
+                        newFlora.parent = floraHolder;
+                        incentive += 0.2f;
+                    } else if (p < monitorOffProbability) {
+                        Transform newFlora = Instantiate(monitorOff, 
+                                                        obstaclePosition + Vector3.up * obstacleHeight, 
+                                                        Quaternion.Euler(new Vector3(0, 120*a, 0))).transform;
+                        newFlora.parent = floraHolder;
+                        incentive += 0.2f;
+                    }
+                }
 
                 floorCoords.Remove(randomCoord);
 
