@@ -860,7 +860,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2639371412452378213}
   m_Layer: 0
-  m_Name: ArrivalPoint
+  m_Name: Arrival point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9879,8 +9879,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6288652597887454827}
-  - component: {fileID: 6934743955077885717}
-  - component: {fileID: 2189704623495678264}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -9902,41 +9900,6 @@ Transform:
   m_Father: {fileID: 8602098691563951222}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
---- !u!65 &6934743955077885717
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8255333764751200352}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4, y: 6, z: 4}
-  m_Center: {x: 0, y: 4, z: 0}
---- !u!114 &2189704623495678264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8255333764751200352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d81b4e820e5251e43ad9920cdcffd3c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nClones: 0
-  reproductionIndex: 
-  nRecordedFrames: 0
-  arrivalStation: {fileID: 0}
-  barrier: {fileID: 1367906025997799327}
-  teleportEffect: {fileID: 7781108871747832712}
-  band1: {fileID: 1015724307569061562}
-  band2: {fileID: 4481865748251434019}
-  band3: {fileID: 1931919374387682577}
-  top: {fileID: 7889337145801227904}
 --- !u!1 &8266878221314214853
 GameObject:
   m_ObjectHideFlags: 0
@@ -10407,6 +10370,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8602098691563951222}
+  - component: {fileID: 5824548947703179052}
+  - component: {fileID: 6740655837284631738}
   m_Layer: 0
   m_Name: Teleport platform
   m_TagString: Untagged
@@ -10434,6 +10399,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &5824548947703179052
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8602098691563951209}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 2
+  m_Height: 7
+  m_Direction: 1
+  m_Center: {x: 0, y: 4, z: 0}
+--- !u!114 &6740655837284631738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8602098691563951209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d81b4e820e5251e43ad9920cdcffd3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrivalStation: {fileID: 0}
 --- !u!1 &8602098691628606821
 GameObject:
   m_ObjectHideFlags: 0
@@ -12013,12 +12005,17 @@ PrefabInstance:
         type: 3}
       propertyPath: mutableObject
       value: 
-      objectReference: {fileID: 2189704623495678264}
+      objectReference: {fileID: 0}
     - target: {fileID: 8739099022758137450, guid: 00d265fa685b89f44b0c5687cee42eee,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: de8acc4401acecc4da4cfb3a96ae722d, type: 2}
+    - target: {fileID: 8912784280564734413, guid: 00d265fa685b89f44b0c5687cee42eee,
+        type: 3}
+      propertyPath: mutableObject
+      value: 
+      objectReference: {fileID: 6740655837284631738}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00d265fa685b89f44b0c5687cee42eee, type: 3}
 --- !u!4 &1220709425401170471 stripped
@@ -12098,12 +12095,17 @@ PrefabInstance:
         type: 3}
       propertyPath: mutableObject
       value: 
-      objectReference: {fileID: 2189704623495678264}
+      objectReference: {fileID: 0}
     - target: {fileID: 8739099022758137450, guid: 00d265fa685b89f44b0c5687cee42eee,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: de8acc4401acecc4da4cfb3a96ae722d, type: 2}
+    - target: {fileID: 8912784280564734413, guid: 00d265fa685b89f44b0c5687cee42eee,
+        type: 3}
+      propertyPath: mutableObject
+      value: 
+      objectReference: {fileID: 6740655837284631738}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00d265fa685b89f44b0c5687cee42eee, type: 3}
 --- !u!4 &3707884656332023727 stripped

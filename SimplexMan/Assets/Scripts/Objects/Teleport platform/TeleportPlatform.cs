@@ -5,12 +5,13 @@ using UnityEngine;
 public class TeleportPlatform : MutableObject {
     
     public Transform arrivalStation;
-    public GameObject barrier;
-    public GameObject teleportEffect;
-    public Transform band1;
-    public Transform band2;
-    public Transform band3;
-    public Transform top;
+    
+    GameObject barrier;
+    GameObject teleportEffect;
+    Transform band1;
+    Transform band2;
+    Transform band3;
+    Transform top;
 
     // Animation
     float bandSeparationSpeed = 0.5f;
@@ -43,12 +44,17 @@ public class TeleportPlatform : MutableObject {
     bool initialIsIdle;
     bool initialIsRecovering;
 
-    public override void Start() {
+    void Awake() {
         player = FindObjectOfType<PlayerController>();
-        base.Start();
+        band1 = transform.Find("Structure").Find("Band1");
+        band2 = transform.Find("Structure").Find("Band2");
+        band3 = transform.Find("Structure").Find("Band3");
+        top  = transform.Find("Structure").Find("Top");
+        teleportEffect = top.Find("Teleport effect").gameObject;
+        barrier = transform.Find("Barrier").gameObject;
     }
 
-    public override void ChangeState(bool state) {
+    public override bool ChangeState(bool state) {
         if (!state) {
             activatedControllers++;
             if (activatedControllers == 1 && isIdle) {
@@ -60,6 +66,7 @@ public class TeleportPlatform : MutableObject {
                 StopTeleport();
             }
         }
+        return true;
     }
 
     void StartTeleport() {
@@ -78,7 +85,7 @@ public class TeleportPlatform : MutableObject {
         StartCoroutine("MergeBands");
     }
 
-    public override void StartRecording() {
+    protected override void StartRecording() {
         initialBand1Position = band1.localPosition;
         initialBand1Rotation = band1.localRotation;
         initialBand2Position = band2.localPosition;
@@ -95,7 +102,7 @@ public class TeleportPlatform : MutableObject {
         base.StartRecording();
     }
 
-    public override void StopRecording() {
+    protected override void StopRecording() {
         band1.localPosition = initialBand1Position;
         band1.localRotation = initialBand1Rotation;
         band2.localPosition = initialBand2Position;

@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2841604724274891222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2841604724274891220}
+  - component: {fileID: 2841604724274891221}
+  - component: {fileID: 2841604724274891223}
+  m_Layer: 0
+  m_Name: Map Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2841604724274891220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2841604724274891222}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2841604724274891221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2841604724274891222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b473c595c77a143badec78d0845b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seed: 0
+  mapName: generated Map
+  mapSize: {x: 10, y: 10}
+  sectorSize: 6
+  tileSize: 4
+  outlinePercent: 0.02
+  interactiveFloor: 1
+  obstaclePercent: 0.06
+  minObstacleHeight: 2
+  maxObstacleHeight: 5
+  obstacleColor1: {r: 0.21568628, g: 0.46376345, b: 0.6784314, a: 0}
+  obstacleColor2: {r: 0.17354931, g: 0.20650652, b: 0.49056602, a: 0}
+  monitorOffProbability: 0.1
+  monitorOnProbability: 0.05
+  wallPercent: 1
+  wallsHeightRange: {x: 12, y: 22}
+  borderLayers: 5
+  borderLayerOffset: 12
+  bordersHeightRange: {x: 13, y: 20}
+  tilePrefab: {fileID: 860655537289331158, guid: d92926e5f82dfe249952b665e213f06e,
+    type: 3}
+  obstaclePrefab: {fileID: 860655537289331158, guid: 731328afbd6d1b640bb90a9e09f8a398,
+    type: 3}
+  underFloorMat: {fileID: 2100000, guid: 11b97029ffe4f7349b589dc2b71f65ae, type: 2}
+  monitorOn: {fileID: 8349497599443344674, guid: e33a1b15a86a5d440bdd8bb4318a971c,
+    type: 3}
+  monitorOff: {fileID: 8349497599443344674, guid: 3693e34236c6ff84884786a51e0c4826,
+    type: 3}
+--- !u!114 &2841604724274891223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2841604724274891222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a58d6a654ae20640ae6e3ff547e9c1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  wallBlock: {fileID: 0}
+  size: 6

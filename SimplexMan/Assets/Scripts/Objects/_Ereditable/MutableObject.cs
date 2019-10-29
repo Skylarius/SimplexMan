@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MutableObject : Recordable {
-    public virtual void ChangeState(bool state) {}
-
-    public virtual void ChangeTransform(bool state) {}
+public abstract class MutableObject : Recordable {
+    public abstract bool ChangeState(bool state);
 }

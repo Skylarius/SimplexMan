@@ -8,7 +8,7 @@ public class InteractiveCollider : Recordable {
     
     int nCollidingObjects = 0;
 
-    public override void Start() {
+    protected override void Start() {
         base.Start();
         FindObjectOfType<PlayerController>().PlayerInteraction += PlayerInteraction;
         FindObjectOfType<PlayerController>().StopPlayerInteraction += StopPlayerInteraction;

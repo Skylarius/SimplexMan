@@ -47,6 +47,7 @@
   <ItemGroup>     <Compile Include="Assets\Scripts\_Old\MapGenerator_.cs" />
      <Compile Include="Assets\Scripts\Controller.cs" />
      <Compile Include="Assets\Scripts\Map\FloorTile.cs" />
+     <Compile Include="Assets\Scripts\Map\Flora\Monitor.cs" />
      <Compile Include="Assets\Scripts\Map\Flora\NoisyScreens.cs" />
      <Compile Include="Assets\Scripts\Map\MapGenerator.cs" />
      <Compile Include="Assets\Scripts\Objects\_Ereditable\InteractiveCollider.cs" />
@@ -55,13 +56,14 @@
      <Compile Include="Assets\Scripts\Objects\Controllers\Lever.cs" />
      <Compile Include="Assets\Scripts\Objects\Controllers\Switch.cs" />
      <Compile Include="Assets\Scripts\Objects\Controllers\Wheel.cs" />
-     <Compile Include="Assets\Scripts\Objects\Electric Wall\ElectricCollider.cs" />
-     <Compile Include="Assets\Scripts\Objects\Electric Wall\ElectricWall.cs" />
      <Compile Include="Assets\Scripts\Objects\Teleport platform\TeleportBarrier.cs" />
      <Compile Include="Assets\Scripts\Objects\Teleport platform\TeleportPlatform.cs" />
      <Compile Include="Assets\Scripts\Objects\Utility\WallGenerator.cs" />
-     <Compile Include="Assets\Scripts\Objects\Vents wall\Vent.cs" />
-     <Compile Include="Assets\Scripts\Objects\Vents wall\VentsWall.cs" />
+     <Compile Include="Assets\Scripts\Objects\Walls\Electric Wall\ElectricCollider.cs" />
+     <Compile Include="Assets\Scripts\Objects\Walls\Electric Wall\ElectricWall.cs" />
+     <Compile Include="Assets\Scripts\Objects\Walls\SlidingWall.cs" />
+     <Compile Include="Assets\Scripts\Objects\Walls\Vents wall\Vent.cs" />
+     <Compile Include="Assets\Scripts\Objects\Walls\Vents wall\VentsWall.cs" />
      <Compile Include="Assets\Scripts\Objects\WaveGenerator.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PostProcessingSwitch.cs" />

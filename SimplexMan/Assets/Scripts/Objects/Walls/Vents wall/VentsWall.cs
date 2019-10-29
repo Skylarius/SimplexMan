@@ -15,35 +15,26 @@ public class VentsWall : MutableObject {
     Vector3 initialWallRotation;
     bool initialState;
 
-    public override void Start() {
+    protected override void Start() {
         wallRotation = wall.localRotation.eulerAngles;
         base.Start();
     }
 
-    public override void ChangeState(bool _state) {
+    public override bool ChangeState(bool _state) {
         state = _state;
         foreach (Vent vent in vents) {
             vent.ChangeState(_state);
         }
+        return true;
     }
 
-    public override void ChangeTransform(bool _state) {
-        state = _state;
-        if (state == true) {
-            wallRotation.y += Time.deltaTime * speed;
-        } else {
-            wallRotation.y -= Time.deltaTime * speed;
-        }
-        wall.localRotation = Quaternion.Euler(wallRotation);
-    }
-
-    public override void StartRecording() {
+    protected override void StartRecording() {
         initialWallRotation = wallRotation;
         initialState = state;
         base.StartRecording();
     }
 
-    public override void StopRecording() {
+    protected override void StopRecording() {
         wallRotation = initialWallRotation;
         wall.localRotation = Quaternion.Euler(wallRotation);
         ChangeState(initialState);

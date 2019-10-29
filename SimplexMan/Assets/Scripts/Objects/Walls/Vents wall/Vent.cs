@@ -28,13 +28,13 @@ public class Vent : MutableObject {
         helixRotation.z = Random.Range(0, 30);
     }
 
-    public override void Update() {
+    protected override void Update() {
         helixRotation.z += Time.deltaTime * helixSpeed;
         helix.localRotation = Quaternion.Euler(helixRotation);
         base.Update();
     }
 
-    public override void ChangeState(bool state) {
+    public override bool ChangeState(bool state) {
         if (state == true) {
             electricity.material.EnableKeyword("_EMISSION");
             StopCoroutine("Off");
@@ -44,15 +44,16 @@ public class Vent : MutableObject {
             StopCoroutine("On");
             StartCoroutine("Off");
         }
+        return true;
     }
 
-    public override void StartRecording() {
+    protected override void StartRecording() {
         initialHelixSpeed = helixSpeed;
         initialWindRate = wind.GetComponent<ParticleSystem>().emission.rateOverTime.constant;
         base.StartRecording();
     }
 
-    public override void StopRecording() {
+    protected override void StopRecording() {
         helixSpeed = initialHelixSpeed;
         var emission = wind.GetComponent<ParticleSystem>().emission;
         emission.rateOverTime = initialWindRate;

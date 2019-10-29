@@ -5,8 +5,9 @@ using UnityEngine;
 public class Lever : InteractiveCollider {
     
     public MutableObject mutableObject;
-    public float speed = 100;
-    public Transform lever;
+    
+    float speed = 100;
+    Transform lever;
 
     enum State {Down, Up};
     State state = State.Up;
@@ -18,9 +19,8 @@ public class Lever : InteractiveCollider {
     Quaternion initialRotation;
     State initialState;
 
-    public override void Start() {
-        base.Start();
-        
+    void Awake() {
+        lever = transform.Find("Lever");
         SetState(state);
     }
 
@@ -53,13 +53,13 @@ public class Lever : InteractiveCollider {
         }
     }
 
-    public override void StartRecording() {
+    protected override void StartRecording() {
         initialState = state;
         initialRotation = lever.localRotation;
         base.StartRecording();
     }
 
-    public override void StopRecording() {
+    protected override void StopRecording() {
         if (state != initialState) {
             state = initialState;
             mutableObject.ChangeState(true);

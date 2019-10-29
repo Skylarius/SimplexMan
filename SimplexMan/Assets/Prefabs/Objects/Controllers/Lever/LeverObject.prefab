@@ -89,8 +89,6 @@ GameObject:
   - component: {fileID: 812346012309911921}
   - component: {fileID: 5758381872417190209}
   - component: {fileID: 8739099022758137450}
-  - component: {fileID: 7823084194605394634}
-  - component: {fileID: 2796057457268791516}
   m_Layer: 0
   m_Name: Electricity
   m_TagString: Untagged
@@ -158,37 +156,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7823084194605394634
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708647164422450229}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 46, y: 1.5, z: 1.5}
-  m_Center: {x: -23, y: 0, z: 0}
---- !u!114 &2796057457268791516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708647164422450229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5cfd7df38b06294882e322fe76fc6a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nClones: 0
-  reproductionIndex: 
-  nRecordedFrames: 0
-  mutableObject: {fileID: 0}
-  speed: 100
-  lever: {fileID: 7675619879014005819}
 --- !u!1 &1366168324078398198
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,6 +670,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1715540147225366597}
+  - component: {fileID: 6936370171065784073}
+  - component: {fileID: 8912784280564734413}
   m_Layer: 0
   m_Name: LeverObject
   m_TagString: Untagged
@@ -727,6 +696,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6936370171065784073
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962860155764060513}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.5, y: 3, z: 3}
+  m_Center: {x: -1.25, y: 0, z: 0}
+--- !u!114 &8912784280564734413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962860155764060513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5cfd7df38b06294882e322fe76fc6a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mutableObject: {fileID: 0}
 --- !u!1 &5082746926830358049
 GameObject:
   m_ObjectHideFlags: 0

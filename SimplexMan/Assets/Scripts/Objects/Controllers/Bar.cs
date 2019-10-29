@@ -17,7 +17,7 @@ public class Bar : InteractiveCollider {
     float initialWheelRotation;
     
 
-    public override void Start() {
+    protected override void Start() {
         base.Start();
         wheelRotation = wheel.localRotation.eulerAngles;
     }
@@ -38,12 +38,12 @@ public class Bar : InteractiveCollider {
         }
     }
 
-    public override void StartRecording() {
+    protected override void StartRecording() {
         initialWheelRotation = wheelRotation.x;
         base.StartRecording();
     }
 
-    public override void StopRecording() {
+    protected override void StopRecording() {
         wheelRotation.x = initialWheelRotation;
         wheel.localRotation = Quaternion.Euler(wheelRotation);
         

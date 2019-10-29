@@ -7,30 +7,26 @@ public class Switch : InteractiveCollider {
     public enum State {On, Off};
     public State state;
     public MutableObject mutableObject;
-    public Transform swicthLever;
-    public Renderer greenLight;
-    public Renderer redLight;
-    public float speed;
-
+    
+    float speed = 5;
     float onPositionZ = 0.3f;
+    Transform switchLever;
     Material green;
     Material red;
 
     // Recorded initial state
     State initialState;
 
-    public override void Start() {
-        base.Start();
-
-        green = greenLight.material;
-        red = redLight.material;
-        
+    void Awake() {
+        switchLever = transform.Find("Switch");
+        green = transform.Find("Green light").GetComponent<Renderer>().material;
+        red = transform.Find("Red light").GetComponent<Renderer>().material;
         SetState(state);
     }
 
     void SetState(State s) {
         state = s;
-        Vector3 pos = swicthLever.localPosition;
+        Vector3 pos = switchLever.localPosition;
         if (s == State.On) {
             pos.z = onPositionZ;
             mutableObject.ChangeState(true);
@@ -42,7 +38,7 @@ public class Switch : InteractiveCollider {
             red.EnableKeyword("_EMISSION");
             green.DisableKeyword("_EMISSION");
         }
-        swicthLever.localPosition = pos;
+        switchLever.localPosition = pos;
     }
 
     protected override void PlayerInteraction() {
@@ -57,12 +53,12 @@ public class Switch : InteractiveCollider {
         }
     }
 
-    public override void StartRecording() {
+    protected override void StartRecording() {
         initialState = state;
         base.StartRecording();
     }
 
-    public override void StopRecording() {
+    protected override void StopRecording() {
         if (state != initialState) {
             state = initialState;
             SetState(state);
@@ -71,16 +67,16 @@ public class Switch : InteractiveCollider {
     }
 
     IEnumerator On() {
-        while (swicthLever.localPosition.z < onPositionZ) {
-            swicthLever.localPosition += new Vector3(0, 0, Time.deltaTime * speed);
+        while (switchLever.localPosition.z < onPositionZ) {
+            switchLever.localPosition += new Vector3(0, 0, Time.deltaTime * speed);
             yield return null;
         }
         SetState(State.On);
     }
 
     IEnumerator Off() {
-        while (swicthLever.localPosition.z > -onPositionZ) {
-            swicthLever.localPosition -= new Vector3(0, 0, Time.deltaTime * speed);
+        while (switchLever.localPosition.z > -onPositionZ) {
+            switchLever.localPosition -= new Vector3(0, 0, Time.deltaTime * speed);
             yield return null;
         }
         SetState(State.Off);

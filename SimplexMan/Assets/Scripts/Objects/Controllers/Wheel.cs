@@ -4,24 +4,19 @@ using UnityEngine;
 
 public class Wheel : InteractiveCollider {
     
-    public float wheelSpeed;
-    public float wallSpeed;
-    public Transform wheel;
-    public Transform leftWall;
-    public Transform rightWall;
+    public MutableObject mutableObject;
 
-    bool isHolding = false;
-    float wallDistance = 14;
-
+    Transform wheel;
     Vector3 wheelRotation;
+
+    float wheelSpeed = 10;
+    bool isHolding = false;
     
     // Recorded initial state
     float initialWheelRotation;
-    float initialLeftPosition;
-    float initialRightPosition;
 
-    public override void Start() {
-        base.Start();
+    void Awake() {
+        wheel = transform.Find("Wheel");
         wheelRotation = wheel.localRotation.eulerAngles;
     }
 
@@ -41,42 +36,32 @@ public class Wheel : InteractiveCollider {
         }
     }
 
-    public override void StartRecording() {
-        initialWheelRotation = wheelRotation.x;
-        initialLeftPosition = leftWall.localPosition.x;
-        initialRightPosition = rightWall.localPosition.x;
+    protected override void StartRecording() {
+        initialWheelRotation = wheelRotation.z;
         base.StartRecording();
     }
 
-    public override void StopRecording() {
-        wheelRotation.x = initialWheelRotation;
+    protected override void StopRecording() {
+        wheelRotation.z = initialWheelRotation;
         wheel.localRotation = Quaternion.Euler(wheelRotation);
-        leftWall.localPosition = new Vector3(initialLeftPosition, 0, 0);
-        rightWall.localPosition = new Vector3(initialRightPosition, 0, 0);
         base.StopRecording();
     }
 
     IEnumerator Hold() {
-        while (rightWall.localPosition.x <= wallDistance) {
-            leftWall.localPosition -= new Vector3(Time.deltaTime * wallSpeed, 0, 0);
-            rightWall.localPosition += new Vector3(Time.deltaTime * wallSpeed, 0, 0);
-            wheelRotation.x += Time.deltaTime * wheelSpeed;
+        while (mutableObject.ChangeState(true)) {
+            wheelRotation.z += Time.deltaTime * wheelSpeed;
             wheel.localRotation = Quaternion.Euler(wheelRotation);
             yield return null;
         }
     }
 
     IEnumerator Release() {
-        while (rightWall.localPosition.x > 0) {
-            leftWall.localPosition += new Vector3(Time.deltaTime * wallSpeed * 10, 0, 0);
-            rightWall.localPosition -= new Vector3(Time.deltaTime * wallSpeed * 10, 0, 0);
-            wheelRotation.x -= Time.deltaTime * wheelSpeed * 10;
+        while (mutableObject.ChangeState(false)) {
+            wheelRotation.z -= Time.deltaTime * wheelSpeed * 10;
             wheel.localRotation = Quaternion.Euler(wheelRotation);
             yield return null;
         }
-        leftWall.localPosition = new Vector3(0, 0, 0);
-        rightWall.localPosition = new Vector3(0, 0, 0);
-        wheelRotation.x = 0;
+        wheelRotation.z = 0;
         wheel.localRotation = Quaternion.Euler(wheelRotation);
     }
 }

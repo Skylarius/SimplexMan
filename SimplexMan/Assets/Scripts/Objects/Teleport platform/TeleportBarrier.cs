@@ -26,7 +26,6 @@ public class TeleportBarrier : MonoBehaviour {
     }
 
     void Repulse(Collider collider) {
-        print("Repulse");
         Vector3 direction = (collider.transform.position - transform.position);
         direction.y = 0;
         direction.Normalize();
