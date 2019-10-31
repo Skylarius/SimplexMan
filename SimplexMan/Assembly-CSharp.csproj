@@ -51,9 +51,12 @@
      <Compile Include="Assets\Scripts\Map\Flora\NoisyScreens.cs" />
      <Compile Include="Assets\Scripts\Map\MapGenerator.cs" />
      <Compile Include="Assets\Scripts\Objects\_Ereditable\InteractiveCollider.cs" />
+     <Compile Include="Assets\Scripts\Objects\_Ereditable\InteractivePoweredCollider.cs" />
+     <Compile Include="Assets\Scripts\Objects\_Ereditable\IPower.cs" />
      <Compile Include="Assets\Scripts\Objects\_Ereditable\MutableObject.cs" />
      <Compile Include="Assets\Scripts\Objects\Controllers\Bar.cs" />
      <Compile Include="Assets\Scripts\Objects\Controllers\Lever.cs" />
+     <Compile Include="Assets\Scripts\Objects\Controllers\PowerLever.cs" />
      <Compile Include="Assets\Scripts\Objects\Controllers\Switch.cs" />
      <Compile Include="Assets\Scripts\Objects\Controllers\Wheel.cs" />
      <Compile Include="Assets\Scripts\Objects\Teleport platform\TeleportBarrier.cs" />

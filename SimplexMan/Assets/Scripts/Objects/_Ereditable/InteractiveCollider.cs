@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InteractiveCollider : Recordable {
-    
+
     protected bool isEnabled = false;
     
     int nCollidingObjects = 0;
 
-    protected override void Start() {
-        base.Start();
-    }
-
     public virtual void PlayerInteraction() {}
     public virtual void StopPlayerInteraction() {}
+
+    // Recorded initial state
+    bool initialPowerState;
 
     void OnTriggerEnter(Collider collider) {
         if (collider.tag == "Player" || collider.tag == "Clone") {

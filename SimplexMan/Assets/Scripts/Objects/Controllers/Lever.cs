@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lever : InteractiveCollider {
+public class Lever : InteractivePoweredCollider {
     
     public MutableObject mutableObject;
     
@@ -21,6 +21,7 @@ public class Lever : InteractiveCollider {
 
     void Awake() {
         lever = transform.Find("Lever");
+        base.electricity.Add(transform.Find("Electricity").GetComponent<Renderer>());
     }
 
     protected override void Start() {
@@ -36,9 +37,18 @@ public class Lever : InteractiveCollider {
             mutableObject.ChangeState(true);
         } else { // Down
             rot.z = -upRotation;
-            mutableObject.ChangeState(false);
+            if (base.hasPower) {
+                mutableObject.ChangeState(false);
+            }
         }
         lever.localRotation = Quaternion.Euler(rot);
+    }
+
+    public override void SetPower(bool _hasPower) {
+        base.SetPower(_hasPower);
+        if (_hasPower == false) {
+            mutableObject.ChangeState(true);
+        }
     }
 
     public override void PlayerInteraction() {

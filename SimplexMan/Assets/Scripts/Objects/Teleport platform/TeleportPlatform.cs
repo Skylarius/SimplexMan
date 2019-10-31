@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeleportPlatform : MutableObject {
+public class TeleportPlatform : MutableObject, IPower {
     
-    public Transform arrivalStation;
+    public TeleportPlatform arrivalStation;
     
     GameObject barrier;
     GameObject teleportEffect;
@@ -12,6 +12,8 @@ public class TeleportPlatform : MutableObject {
     Transform band2;
     Transform band3;
     Transform top;
+    Transform arrivalPoint;
+    List<Renderer> electricity = new List<Renderer>();
 
     // Animation
     float bandSeparationSpeed = 0.5f;
@@ -27,6 +29,7 @@ public class TeleportPlatform : MutableObject {
     // Internal
     bool isIdle = true;
     bool isRecovering = false;
+    bool hasPower = false;
     PlayerController player;
 
     // Recorded initial state
@@ -52,37 +55,72 @@ public class TeleportPlatform : MutableObject {
         top  = transform.Find("Structure").Find("Top");
         teleportEffect = top.Find("Teleport effect").gameObject;
         barrier = transform.Find("Barrier").gameObject;
+        foreach (Transform child in transform.Find("Structure")) {
+            if (child.name == "Band1" || child.name == "Band2" || child.name == "Band3") {
+                foreach (Transform c in child.Find("Light")) {
+                    electricity.Add(c.GetComponent<Renderer>());
+                }
+            }
+        }
+        foreach (Transform child in transform.Find("Control station B").Find("Connection")) {
+            electricity.Add(child.GetComponent<Renderer>());
+        }
+        electricity.Add(transform.Find("Control station B").Find("LeverObject").Find("Electricity").GetComponent<Renderer>());
+        if (arrivalStation != null) {
+            arrivalPoint = arrivalStation.transform.Find("Arrival point");
+        }
+    }
+
+    protected override void Start() {
+        SetPower(hasPower);
+        base.Start();
     }
 
     public override bool ChangeState(bool state) {
         if (!state) {
             activatedControllers++;
             if (activatedControllers == 1 && isIdle) {
-                StartTeleport();
-            }
+                StartTeleport(true);
+                arrivalStation.StartTeleport(false);
+            } 
         } else if (activatedControllers > 0) {
             activatedControllers--;
             if (!isRecovering && !isIdle) {
-                StopTeleport();
+                StopTeleport(true);
+                arrivalStation.StopTeleport(false);
             }
         }
         return true;
     }
 
-    void StartTeleport() {
+    public void SetPower(bool _hasPower) {
+        hasPower = _hasPower;
+        foreach (Renderer r in electricity) {
+            if (hasPower) {
+                r.material.EnableKeyword("_EMISSION");
+            } else {
+                r.material.DisableKeyword("_EMISSION");
+            }
+        }
+        if (arrivalStation != null) {
+            arrivalStation.SetPower(_hasPower);
+        }
+    }
+
+    public void StartTeleport(bool isTeleporting) {
         isRecovering = false;
         isIdle = false;
 
         barrier.SetActive(true);
         barrier.GetComponent<TeleportBarrier>().objectsToTeleport = objectsToTeleport;
         
-        StartCoroutine("SeparateBands");
+        StartCoroutine("SeparateBands", isTeleporting);
     }
 
-    void StopTeleport() {
+    public void StopTeleport(bool isReceiving) {
         teleportEffect.SetActive(false);
         StopCoroutine("SeparateBands");
-        StartCoroutine("MergeBands");
+        StartCoroutine("MergeBands", isReceiving);
     }
 
     protected override void StartRecording() {
@@ -131,12 +169,14 @@ public class TeleportPlatform : MutableObject {
         }
     }
 
-    IEnumerator SeparateBands() {
-        player.DisableRecording();
-
-        foreach (GameObject objectToTeleport in objectsToTeleport) {
-            if (objectToTeleport != null) {
-                objectToTeleport.GetComponent<Controller>().Stun(10);
+    IEnumerator SeparateBands(bool isTeleporting) {
+        
+        if (isTeleporting) {
+            player.DisableRecording();
+            foreach (GameObject objectToTeleport in objectsToTeleport) {
+                if (objectToTeleport != null) {
+                    objectToTeleport.GetComponent<Controller>().Stun(10);
+                }
             }
         }
 
@@ -147,9 +187,11 @@ public class TeleportPlatform : MutableObject {
         Vector3 band3Rotation = band3.localRotation.eulerAngles;
 
         while (top.localPosition.y <= 2) {
-            foreach (GameObject objectToTeleport in objectsToTeleport) {
-                if (objectToTeleport != null) {
-                    objectToTeleport.GetComponent<Rigidbody>().velocity = new Vector3(0, Random.Range(0f, 6f), 0);
+            if (isTeleporting) {
+                foreach (GameObject objectToTeleport in objectsToTeleport) {
+                    if (objectToTeleport != null) {
+                        objectToTeleport.GetComponent<Rigidbody>().velocity = new Vector3(0, Random.Range(0f, 6f), 0);
+                    }
                 }
             }
 
@@ -175,9 +217,11 @@ public class TeleportPlatform : MutableObject {
         }
 
         while (bandsSpeed < maxBandsSpeed) {
-            foreach (GameObject objectToTeleport in objectsToTeleport) {
-                if (objectToTeleport != null) {
-                    objectToTeleport.GetComponent<Rigidbody>().velocity = new Vector3(0, Random.Range(0f, 6f), 0);
+            if (isTeleporting) {
+                foreach (GameObject objectToTeleport in objectsToTeleport) {
+                    if (objectToTeleport != null) {
+                        objectToTeleport.GetComponent<Rigidbody>().velocity = new Vector3(0, Random.Range(0f, 6f), 0);
+                    }
                 }
             }
 
@@ -193,16 +237,18 @@ public class TeleportPlatform : MutableObject {
             yield return null;
         }
 
-        foreach (GameObject objectToTeleport in objectsToTeleport) {
-            if (objectToTeleport != null) {
-                objectToTeleport.transform.position = arrivalStation.position;
+        if (isTeleporting) {
+            foreach (GameObject objectToTeleport in objectsToTeleport) {
+                if (objectToTeleport != null) {
+                    objectToTeleport.transform.position = arrivalPoint.position;
+                }
             }
         }
 
-        StartCoroutine("MergeBands");
+        StartCoroutine("MergeBands", !isTeleporting);
     }
 
-    IEnumerator MergeBands() {
+    IEnumerator MergeBands(bool isReceiving) {
 
         bandsSpeed = 10;
         isRecovering = true;
@@ -254,20 +300,20 @@ public class TeleportPlatform : MutableObject {
         top.localPosition = new Vector3(0, 0, 0);
 
         barrier.SetActive(false);
-        foreach (GameObject objectToTeleport in objectsToTeleport) {
-            if (objectToTeleport != null) {
-                print("something");
-                objectToTeleport.GetComponent<Controller>().Stun(0);
-            }
-        }
         barrier.GetComponent<TeleportBarrier>().objectsToTeleport.Clear();
+        if (isReceiving) {
+            foreach (GameObject objectToTeleport in objectsToTeleport) {
+                if (objectToTeleport != null) {
+                    objectToTeleport.GetComponent<Controller>().Stun(0);
+                }
+            }
+            player.EnableRecording();
+        }
         objectsToTeleport.Clear();
 
         teleportEffect.SetActive(false);
 
         isIdle = true;
         isRecovering = false;
-
-        player.EnableRecording();
     }
 }

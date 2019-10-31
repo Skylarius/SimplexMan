@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monitor : MonoBehaviour {
+public class Monitor : InteractiveCollider {
 
     public enum State {On, Off};
     public State state;
@@ -10,6 +10,9 @@ public class Monitor : MonoBehaviour {
     List<Renderer> electricity = new List<Renderer>();
     Renderer indicatorLight;
     GameObject noise;
+
+    // Recorded initial state
+    State initialState;
 
     void Awake() {
         foreach (Transform child in transform.Find("Cables")) {
@@ -20,8 +23,8 @@ public class Monitor : MonoBehaviour {
         SetState(state);
     }
 
-    void SetState(State state) {
-        if (state == State.On) {
+    void SetState(State newState) {
+        if (newState == State.On) {
             noise.SetActive(true);
             foreach (Renderer r in electricity) {
                 r.material.EnableKeyword("_EMISSION");
@@ -34,5 +37,22 @@ public class Monitor : MonoBehaviour {
             }
             indicatorLight.material.SetColor("_EmissionColor", Color.red);
         }
+        state = newState;
+    }
+
+    public override void PlayerInteraction() {
+        if (state == State.On) {
+            SetState(State.Off);
+        } else {
+            SetState(State.On);
+        }
+    }
+
+    protected override void StartRecording() {
+        initialState = state;
+    }
+
+    protected override void StopRecording() {
+        SetState(initialState);
     }
 }
