@@ -21,7 +21,11 @@ public class Switch : InteractiveCollider {
         switchLever = transform.Find("Switch");
         green = transform.Find("Green light").GetComponent<Renderer>().material;
         red = transform.Find("Red light").GetComponent<Renderer>().material;
+    }
+
+    protected override void Start() {
         SetState(state);
+        base.Start();
     }
 
     void SetState(State s) {
@@ -41,7 +45,7 @@ public class Switch : InteractiveCollider {
         switchLever.localPosition = pos;
     }
 
-    protected override void PlayerInteraction() {
+    public override void PlayerInteraction() {
         if (base.isEnabled) {
             if (state == State.On) {
                 StopCoroutine("On");

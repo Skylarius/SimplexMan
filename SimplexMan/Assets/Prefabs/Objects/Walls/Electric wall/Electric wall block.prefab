@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 4140533664116363958}
   - component: {fileID: 4140533664116363959}
   m_Layer: 0
-  m_Name: Electricity
+  m_Name: Electricity effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5032,14 +5032,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4140533665006886554}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -84.68}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 621389514778540897}
   - {fileID: 4140533664116363957}
   - {fileID: 2154885221343981431}
   - {fileID: 7274213268111800817}
-  - {fileID: 7479719217892130089}
+  - {fileID: 1649677168258203416}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5220,7 +5220,7 @@ GameObject:
   - component: {fileID: 9134279570774063328}
   - component: {fileID: 4041812014560964441}
   m_Layer: 0
-  m_Name: Hexagon3D
+  m_Name: Electricity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5235,10 +5235,10 @@ Transform:
   m_GameObject: {fileID: 7578546609903972761}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 17.9, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 0.10000012}
+  m_LocalScale: {x: 3, y: 3, z: 0.10000018}
   m_Children: []
-  m_Father: {fileID: 7479719217892130089}
-  m_RootOrder: 0
+  m_Father: {fileID: 4140533665006886553}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &7062698000139863625
 MeshFilter:
@@ -5300,37 +5300,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: -2124705421725058983, guid: 2c6db879bd05eeb40b8ed0ea0660b7b2, type: 3}
---- !u!1 &7950682028587991991
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7479719217892130089}
-  m_Layer: 0
-  m_Name: Source
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7479719217892130089
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7950682028587991991}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1649677168258203416}
-  m_Father: {fileID: 4140533665006886553}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8750407416857871135
 GameObject:
   m_ObjectHideFlags: 0

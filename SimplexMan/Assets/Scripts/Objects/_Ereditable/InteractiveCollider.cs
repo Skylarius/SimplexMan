@@ -10,12 +10,10 @@ public class InteractiveCollider : Recordable {
 
     protected override void Start() {
         base.Start();
-        FindObjectOfType<PlayerController>().PlayerInteraction += PlayerInteraction;
-        FindObjectOfType<PlayerController>().StopPlayerInteraction += StopPlayerInteraction;
     }
 
-    protected virtual void PlayerInteraction() {}
-    protected virtual void StopPlayerInteraction() {}
+    public virtual void PlayerInteraction() {}
+    public virtual void StopPlayerInteraction() {}
 
     void OnTriggerEnter(Collider collider) {
         if (collider.tag == "Player" || collider.tag == "Clone") {

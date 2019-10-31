@@ -4,20 +4,17 @@ using UnityEngine;
 
 public class VentsWall : MutableObject {
 
-    public Transform wall;
-    public List<Vent> vents;
+    List<Vent> vents = new List<Vent>();
 
-    Vector3 wallRotation;
     bool state;
-    float speed = 10;
 
     // Recorded initial state
-    Vector3 initialWallRotation;
     bool initialState;
 
-    protected override void Start() {
-        wallRotation = wall.localRotation.eulerAngles;
-        base.Start();
+    void Awake() {
+        foreach (Transform vent in transform.Find("Vents")) {
+            vents.Add(vent.GetComponent<Vent>());
+        }
     }
 
     public override bool ChangeState(bool _state) {
@@ -29,14 +26,11 @@ public class VentsWall : MutableObject {
     }
 
     protected override void StartRecording() {
-        initialWallRotation = wallRotation;
         initialState = state;
         base.StartRecording();
     }
 
     protected override void StopRecording() {
-        wallRotation = initialWallRotation;
-        wall.localRotation = Quaternion.Euler(wallRotation);
         ChangeState(initialState);
         base.StopRecording();
     }

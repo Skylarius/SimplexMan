@@ -70,14 +70,6 @@ public class RecordableClone : Controller {
         }
     }
 
-    public override void Interact() {
-        FindObjectOfType<PlayerController>().Interact();
-    }
-
-    public override void StopInteract() {
-        FindObjectOfType<PlayerController>().StopInteract();
-    }
-
     void SetVisibility() {
         GetComponent<CapsuleCollider>().enabled = isAlive;
         GetComponent<MeshRenderer>().enabled = isAlive;

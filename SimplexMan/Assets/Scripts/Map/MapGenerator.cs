@@ -24,8 +24,6 @@ public class MapGenerator : MonoBehaviour {
     public float maxObstacleHeight;
     public Color obstacleColor1;
     public Color obstacleColor2;
-    public float monitorOffProbability;
-    public float monitorOnProbability;
 
     [Header("Border and walls")]
     [Range(0, 1)]
@@ -39,8 +37,6 @@ public class MapGenerator : MonoBehaviour {
     public Transform tilePrefab;
     public Transform obstaclePrefab;
     public Material underFloorMat;
-    public GameObject monitorOn;
-    public GameObject monitorOff;
 
     Transform[,] sectorsMap;
     List<Vector2Int> sectorsCoords;
@@ -262,23 +258,23 @@ public class MapGenerator : MonoBehaviour {
                 obstacleMaterial.color = Color.Lerp(obstacleColor1, obstacleColor2, colorPercent);
                 obstacleRenderer.sharedMaterial = obstacleMaterial;
 
-                float incentive = 0;
-                for (int a = 0; a < 3; a++) {
-                    float p = RandomRange(0, 1) - incentive;
-                    if (p < monitorOnProbability) {
-                        Transform newFlora = Instantiate(monitorOn, 
-                                                        obstaclePosition + Vector3.up * obstacleHeight, 
-                                                        Quaternion.Euler(new Vector3(0, 120*a, 0))).transform;
-                        newFlora.parent = floraHolder;
-                        incentive += 0.2f;
-                    } else if (p < monitorOffProbability) {
-                        Transform newFlora = Instantiate(monitorOff, 
-                                                        obstaclePosition + Vector3.up * obstacleHeight, 
-                                                        Quaternion.Euler(new Vector3(0, 120*a, 0))).transform;
-                        newFlora.parent = floraHolder;
-                        incentive += 0.2f;
-                    }
-                }
+                // float incentive = 0;
+                // for (int a = 0; a < 3; a++) {
+                //     float p = RandomRange(0, 1) - incentive;
+                //     if (p < monitorOnProbability) {
+                //         Transform newFlora = Instantiate(monitorOn, 
+                //                                         obstaclePosition + Vector3.up * obstacleHeight, 
+                //                                         Quaternion.Euler(new Vector3(0, 120*a, 0))).transform;
+                //         newFlora.parent = floraHolder;
+                //         incentive += 0.2f;
+                //     } else if (p < monitorOffProbability) {
+                //         Transform newFlora = Instantiate(monitorOff, 
+                //                                         obstaclePosition + Vector3.up * obstacleHeight, 
+                //                                         Quaternion.Euler(new Vector3(0, 120*a, 0))).transform;
+                //         newFlora.parent = floraHolder;
+                //         incentive += 0.2f;
+                //     }
+                // }
 
                 floorCoords.Remove(randomCoord);
 

@@ -26,6 +26,7 @@ public class Controller : MonoBehaviour {
     Rigidbody rb;
     Vector3 jumpStartVelocity;
     bool isStunned;
+    InteractiveCollider interactiveObject;
 
     protected virtual void Start() {
         rb = GetComponent<Rigidbody>();
@@ -58,8 +59,19 @@ public class Controller : MonoBehaviour {
         }
     }
 
-    public virtual void Interact() {}
-    public virtual void StopInteract() {}
+    protected virtual void GetInputs() {}
+
+    void Interact() {
+        if (interactiveObject != null) {
+            interactiveObject.PlayerInteraction();
+        }
+    }
+
+    void StopInteract() {
+        if (interactiveObject != null) {
+            interactiveObject.StopPlayerInteraction();
+        }
+    }
 
     // Physics should be applied in FixedUpdate
     protected virtual void FixedUpdate() {
@@ -106,5 +118,11 @@ public class Controller : MonoBehaviour {
         isStunned = false;
     }
 
-    protected virtual void GetInputs() {}
+    void OnTriggerEnter(Collider collider) {
+        interactiveObject = collider.GetComponent<InteractiveCollider>();
+    }
+
+    void OnTriggerExit(Collider collider) {
+        interactiveObject = null;
+    }
 }

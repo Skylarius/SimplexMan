@@ -20,7 +20,7 @@ public class Wheel : InteractiveCollider {
         wheelRotation = wheel.localRotation.eulerAngles;
     }
 
-    protected override void PlayerInteraction() {
+    public override void PlayerInteraction() {
         if (base.isEnabled) {
             isHolding = true;
             StopCoroutine("Release");
@@ -28,7 +28,7 @@ public class Wheel : InteractiveCollider {
         }
     }
 
-    protected override void StopPlayerInteraction() {
+    public override void StopPlayerInteraction() {
         if (isHolding) {
             isHolding = false;
             StopCoroutine("Hold");

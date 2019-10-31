@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class Vent : MutableObject {
     
-    public Transform helix;
-    public Renderer electricity;
-    public GameObject windPrefab;
+    Transform helix;
+    Renderer electricity;
+    GameObject wind;
 
     float maxWindForce = 60;
     float maxHelixSpeed = 300;
     float helixSpeed = 0;
     Vector3 helixRotation;
-    bool isOn = true;
-    GameObject wind;
     float maxWindRateOverTime = 50;
+    bool isOn = true;
 
     // Recordable initial state
     float initialHelixSpeed;
     float initialWindRate;
 
     void Awake() {
-        wind = Instantiate(windPrefab, transform.position, Quaternion.identity);
-        wind.transform.parent = transform.parent;
-        wind.transform.localRotation = transform.localRotation;
+        helix = transform.Find("Helix");
+        electricity = transform.Find("Electricity").GetComponent<Renderer>();
+        wind = transform.Find("Wind").gameObject;
+        
         helixRotation = helix.localRotation.eulerAngles;
         helixRotation.z = Random.Range(0, 30);
     }

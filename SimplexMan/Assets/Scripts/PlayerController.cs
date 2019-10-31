@@ -8,8 +8,6 @@ public class PlayerController : Controller {
     public float cameraRotSpeed = 1;
     public Vector2 cameraRotationXRange = new Vector2(0, 15);
 
-    public event System.Action PlayerInteraction;
-    public event System.Action StopPlayerInteraction;
     public event System.Action StartRecording;
     public event System.Action StopRecording;
 
@@ -54,14 +52,6 @@ public class PlayerController : Controller {
             }
             
         }
-    }
-
-    public override void Interact() {
-        PlayerInteraction();
-    }
-
-    public override void StopInteract() {
-        StopPlayerInteraction();
     }
 
     public void EnableRecording() {

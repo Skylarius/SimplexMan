@@ -21,7 +21,11 @@ public class Lever : InteractiveCollider {
 
     void Awake() {
         lever = transform.Find("Lever");
+    }
+
+    protected override void Start() {
         SetState(state);
+        base.Start();
     }
 
     void SetState(State s) {
@@ -37,7 +41,7 @@ public class Lever : InteractiveCollider {
         lever.localRotation = Quaternion.Euler(rot);
     }
 
-    protected override void PlayerInteraction() {
+    public override void PlayerInteraction() {
         if (base.isEnabled) {
             isHolding = true;
             StopCoroutine("Up");
@@ -45,7 +49,7 @@ public class Lever : InteractiveCollider {
         }
     }
 
-    protected override void StopPlayerInteraction() {
+    public override void StopPlayerInteraction() {
         if (isHolding) {
             isHolding = false;
             StopCoroutine("Down");
