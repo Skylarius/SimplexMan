@@ -72,7 +72,7 @@ public class TeleportPlatform : MutableObject, IPower {
     }
 
     protected override void Start() {
-        SetPower(hasPower);
+        //SetPower(hasPower);
         base.Start();
     }
 

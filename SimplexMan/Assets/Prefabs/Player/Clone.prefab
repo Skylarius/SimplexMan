@@ -127,6 +127,8 @@ MonoBehaviour:
   rotationSpeed: 5
   jumpForce: 300
   airFriction: 0
-  stunnedTime: 1
+  jumpable:
+    serializedVersion: 2
+    m_Bits: 823
   deathEffect: {fileID: 2799673608838946783, guid: bbc56886e54ffb0428ba3b91fcc4d797,
     type: 3}

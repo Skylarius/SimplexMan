@@ -85,8 +85,12 @@ public class FloorTile : MonoBehaviour {
             if (clone == null || !clone.enabled) {
                 nCollidingObjects--;
                 if (nCollidingObjects == 0) {
+                    StopCoroutine("On");
+                    StopCoroutine("OnClone");
                     StartCoroutine("Off");
-                }
+                } else {
+                    StartCoroutine("On", overColorPlayer);
+                } 
                 break;
             }
             yield return null;
